@@ -39,7 +39,7 @@ export default function ContactPage() {
           </SectionHeading>
 
           <div className="mt-14 grid items-start gap-8 lg:mt-20 lg:grid-cols-2">
-            <ChamferCard>
+            <ChamferCard hover={false}>
               <div className="px-6 py-10 sm:px-10.5 lg:py-16">
                 <ContactFormWithParams />
               </div>

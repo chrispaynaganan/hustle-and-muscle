@@ -19,7 +19,7 @@ export default function CoachesPage() {
 
       <section className="bg-linear-to-b from-black to-surface pt-12 pb-24 lg:pt-22 lg:pb-30">
         <Container>
-          <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-reveal-group className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {coaches.map((coach) => (
               <li key={coach.name} className="group relative aspect-portrait overflow-hidden bg-mist">
                 <Link href={`/coaches/${coach.slug}`} aria-label={`View ${coach.name}'s profile`} className="absolute inset-0">

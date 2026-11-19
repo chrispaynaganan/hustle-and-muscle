@@ -42,13 +42,13 @@ export default async function ProgramPage({ params }: Props) {
                 <p key={p}>{p}</p>
               ))}
             </div>
-            <div className="grid gap-12 sm:grid-cols-2">
+            <div data-reveal-group className="grid gap-12 sm:grid-cols-2">
               <List title="Who it's for" items={program.forWho} />
               <List title="What's included" items={program.includes} />
             </div>
           </div>
 
-          <ChamferCard className="lg:sticky lg:top-8">
+          <ChamferCard hover={false} className="lg:sticky lg:top-8">
             <div className="flex flex-col gap-6 px-6 py-8 sm:px-10">
               {program.badge && <span className="self-start bg-brand p-3 text-lg font-medium tracking-display">{program.badge}</span>}
               <p className="flex flex-wrap items-end gap-2">
@@ -82,7 +82,7 @@ export default async function ProgramPage({ params }: Props) {
         <section className="bg-linear-to-b from-surface to-black py-20 lg:py-24">
           <Container>
             <SectionHeading title="Your coaches">Your assessment decides who you&apos;ll train with.</SectionHeading>
-            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <ul data-reveal-group className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {programCoaches.map((c) => (
                 <li key={c.slug}>
                   <Link href={`/coaches/${c.slug}`} className="group flex items-center gap-5">

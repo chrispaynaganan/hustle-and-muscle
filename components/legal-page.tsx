@@ -20,7 +20,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
           ))}
         </nav>
 
-        <article className="flex max-w-196 flex-col gap-12 lg:col-span-3">
+        <article data-reveal-group className="flex max-w-196 flex-col gap-12 lg:col-span-3">
           <header className="flex flex-col gap-6">
             <h1 className="text-5xl font-medium tracking-display md:text-7xl lg:text-8xl">{doc.title}</h1>
             <p className="text-base tracking-display text-graphite">Last updated {legalUpdated}</p>

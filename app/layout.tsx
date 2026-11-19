@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartToast } from "@/components/cart/cart-ui";
+import { RevealObserver, revealBootScript } from "@/components/motion/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { site } from "@/lib/site";
@@ -31,13 +32,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: revealBootScript }} />
+      </head>
       <body>
+        <div aria-hidden className="scroll-progress fixed inset-x-0 top-0 z-60 h-0.5 bg-brand" />
         <CartProvider>
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />
           <CartToast />
+          <RevealObserver />
         </CartProvider>
       </body>
     </html>

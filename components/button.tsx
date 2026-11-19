@@ -12,7 +12,7 @@ const variants: Record<Variant, string> = {
 };
 
 export function buttonClasses(variant: Variant = "solid", extra = "") {
-  return `inline-flex min-h-12 items-center justify-center gap-4 px-6 py-3 text-center text-base font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${variants[variant]} ${extra}`;
+  return `group/btn inline-flex min-h-12 items-center justify-center gap-4 px-6 py-3 text-center text-base font-medium transition-all duration-300 ease-snappy active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${variants[variant]} ${extra}`;
 }
 
 type ButtonLinkProps = Omit<ComponentProps<typeof Link>, "className"> & {
@@ -26,7 +26,7 @@ export function ButtonLink({ variant = "solid", icon = true, className = "", chi
   return (
     <Link {...props} className={buttonClasses(variant, className)}>
       <span>{children}</span>
-      {icon && <ArrowUpRight className="size-6 shrink-0" />}
+      {icon && <ArrowUpRight className="size-6 shrink-0 transition-transform duration-300 ease-snappy group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />}
     </Link>
   );
 }

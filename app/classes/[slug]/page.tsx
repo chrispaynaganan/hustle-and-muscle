@@ -59,7 +59,7 @@ export default async function ClassPage({ params }: Props) {
               </div>
             </dl>
 
-            <div className="grid gap-12 sm:grid-cols-2">
+            <div data-reveal-group className="grid gap-12 sm:grid-cols-2">
               <div className="flex flex-col gap-5">
                 <h2 className="text-2xl font-semibold tracking-display italic">Schedule</h2>
                 <ul className="flex flex-col gap-4 text-lg tracking-display">
@@ -96,7 +96,7 @@ export default async function ClassPage({ params }: Props) {
             )}
           </div>
 
-          <ChamferCard glow={!!gx.featured} className="lg:sticky lg:top-8">
+          <ChamferCard glow={!!gx.featured} hover={false} className="lg:sticky lg:top-8">
             <div className="flex flex-col gap-6 px-6 py-8 sm:px-10">
               <p className="flex flex-wrap items-end gap-2">
                 <span className="text-6xl font-bold tracking-display text-brand">{peso(gx.price)}</span>
@@ -120,7 +120,7 @@ export default async function ClassPage({ params }: Props) {
       <section className="bg-linear-to-b from-surface to-black py-20 lg:py-24">
         <Container>
           <SectionHeading title="Other classes" />
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div data-reveal-group className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {others.map((c) => (
               <ClassCard key={c.slug} gx={c} />
             ))}

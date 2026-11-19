@@ -35,7 +35,7 @@ export default function WhyPage() {
       <section className="bg-linear-to-b from-black to-surface py-20 lg:py-24">
         <Container>
           <SectionHeading title={<>Six reasons members <span className="text-brand">stay.</span></>} />
-          <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-reveal-group className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {reasons.map((r, i) => (
               <li key={r.n}>
                 <ChamferCard size="sm" glow={i === 0} className="h-full">
@@ -71,7 +71,7 @@ export default function WhyPage() {
       <section className="bg-black py-20 lg:py-24">
         <Container>
           <SectionHeading title="Hear it from our members" />
-          <div className="mt-12 grid gap-10 md:grid-cols-3 lg:gap-8">
+          <div data-reveal-group className="mt-12 grid gap-10 md:grid-cols-3 lg:gap-8">
             {testimonials.map((t) => (
               <figure key={t.name} className="flex gap-4">
                 <span aria-hidden className="w-px shrink-0 bg-white/60" />

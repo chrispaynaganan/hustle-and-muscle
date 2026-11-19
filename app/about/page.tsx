@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/button";
+import { CountUp } from "@/components/motion/count-up";
 import { ChamferCard } from "@/components/chamfer-card";
 import { ArrowUpRight, Triangle } from "@/components/icons";
 import { Container, PageHero, SectionHeading } from "@/components/page-hero";
@@ -41,12 +42,14 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <ul className="grid grid-cols-2 gap-6 self-start lg:gap-8">
+          <ul data-reveal-group className="grid grid-cols-2 gap-6 self-start lg:gap-8">
             {aboutStats.map((stat, i) => (
               <li key={stat.label}>
                 <ChamferCard size="sm" glow={i === 0}>
                   <div className="flex flex-col gap-3 px-6 py-8 sm:px-8 lg:py-10">
-                    <span className="text-5xl font-bold tracking-display text-brand lg:text-6xl">{stat.value}</span>
+                    <span className="text-5xl font-bold tracking-display text-brand lg:text-6xl">
+                      {/^\d+\+?$/.test(stat.value) ? <CountUp value={parseInt(stat.value)} suffix={stat.value.endsWith("+") ? "+" : ""} /> : stat.value}
+                    </span>
                     <span className="text-lg tracking-display lg:text-xl">{stat.label}</span>
                   </div>
                 </ChamferCard>
@@ -93,7 +96,7 @@ export default function AboutPage() {
               All Coaches
             </ButtonLink>
           </div>
-          <ul className="mt-14 grid gap-6 sm:grid-cols-3 lg:gap-8">
+          <ul data-reveal-group className="mt-14 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {coaches.slice(0, 3).map((coach) => (
               <li key={coach.name}>
                 <Link href={`/coaches/${coach.slug}`} className="group relative block aspect-portrait overflow-hidden bg-mist">

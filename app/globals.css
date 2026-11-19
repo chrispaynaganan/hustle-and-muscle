@@ -47,6 +47,68 @@
 
   --tracking-display: -0.03em;
 
+  /* Motion */
+  --ease-snappy: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --drop-shadow-glow: 0 0 28px rgb(254 66 3 / 0.35);
+
+  --animate-word: word-in 0.9s var(--ease-snappy) both;
+  --animate-fade-up: fade-up 0.9s var(--ease-snappy) both;
+  --animate-hero-zoom: hero-zoom 2.6s var(--ease-snappy) both;
+  --animate-page-in: page-in 0.6s var(--ease-snappy) both;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-glow: glow 7s ease-in-out infinite;
+  --animate-bump: bump 0.45s var(--ease-snappy);
+  --animate-grow-x: grow-x 0.9s var(--ease-snappy) both;
+
+  @keyframes word-in {
+    from {
+      transform: translateY(110%) rotate(3deg);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+  @keyframes hero-zoom {
+    from {
+      transform: scale(1.12);
+      opacity: 0.4;
+    }
+  }
+  @keyframes page-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes glow {
+    0%,
+    100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.12);
+    }
+  }
+  @keyframes bump {
+    40% {
+      transform: scale(1.35);
+    }
+  }
+  @keyframes grow-x {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
   /* Layout */
   --container-site: 104.25rem; /* 1588px content + 40px gutters */
   --aspect-portrait: 506 / 731;
@@ -62,6 +124,71 @@
 
 @utility chamfer-sm {
   clip-path: polygon(0 0, calc(100% - 1.5rem) 0, 100% 1.5rem, 100% 100%, 1.5rem 100%, 0 calc(100% - 1.5rem));
+}
+
+/* Pause any running animation inside (used by the logo marquee). */
+@utility pause-on-hover {
+  &:hover * {
+    animation-play-state: paused;
+  }
+}
+
+/* Thin orange bar that tracks page scroll (CSS scroll-driven animation). */
+@utility scroll-progress {
+  transform-origin: left;
+  transform: scaleX(0);
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@keyframes progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Hero photos drift slower than the page as you scroll past them. */
+@utility parallax {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: parallax linear both;
+      animation-timeline: view();
+      animation-range: exit;
+    }
+  }
+}
+
+@keyframes parallax {
+  to {
+    transform: translateY(18%);
+  }
+}
+
+/*
+  Scroll reveal. Elements marked data-reveal (or the children of data-reveal-group)
+  ease in when they enter the viewport. The "reveal-ready" class is added by a tiny
+  inline script, so without JavaScript or with reduced motion everything simply shows.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(2.5rem);
+    transition:
+      opacity 0.9s var(--ease-snappy),
+      transform 0.9s var(--ease-snappy);
+    transition-delay: calc(var(--reveal-i, 0) * 90ms);
+  }
+  .reveal-ready [data-reveal="scale"] {
+    transform: scale(0.94);
+  }
+  .reveal-ready [data-reveal][data-shown] {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @layer base {

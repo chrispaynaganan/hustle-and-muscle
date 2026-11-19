@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/button";
+import { CountUp } from "@/components/motion/count-up";
+import { Marquee } from "@/components/motion/marquee";
+import { SplitWords } from "@/components/motion/split-words";
 import { Star, Triangle } from "@/components/icons";
 import { Container, SectionHeading } from "@/components/page-hero";
 import { ClassCard, MembershipPlans, ProgramCard } from "@/components/training-cards";
@@ -26,7 +29,9 @@ export default function HomePage() {
 function Hero() {
   return (
     <section className="relative flex min-h-svh flex-col overflow-hidden bg-black pt-40 lg:min-h-280 lg:pt-72">
-      <Image src="/images/hero-home.jpg" alt="" fill priority sizes="100vw" className="object-cover object-right lg:object-center" />
+      <div aria-hidden className="parallax absolute inset-0">
+        <Image src="/images/hero-home.jpg" alt="" fill priority sizes="100vw" className="object-cover object-right motion-safe:animate-hero-zoom lg:object-center" />
+      </div>
       <div aria-hidden className="absolute inset-0 bg-linear-to-l from-transparent to-black to-75%" />
       <div aria-hidden className="absolute inset-0 bg-linear-to-b from-transparent from-55% to-night" />
 
@@ -34,13 +39,20 @@ function Hero() {
         <div className="flex max-w-220 flex-col gap-10 lg:gap-16">
           <div className="flex flex-col gap-8 lg:gap-12">
             <h1 className="text-6xl leading-none font-medium tracking-display sm:text-8xl xl:text-hero">
-              Build the Body That <span className="text-brand">Powers</span> Your Life.
+              <SplitWords
+                delay={200}
+                step={90}
+                parts={["Build the Body That", { text: "Powers", className: "text-brand" }, "Your Life."]}
+              />
             </h1>
-            <p className="max-w-194.5 text-xl tracking-display md:text-3xl lg:text-heading lg:leading-snug">
+            <p
+              className="max-w-194.5 text-xl tracking-display motion-safe:animate-fade-up md:text-3xl lg:text-heading lg:leading-snug"
+              style={{ animationDelay: "800ms" }}
+            >
               We are dedicated to helping you achieve your fitness goals and improve your overall health and well-being.
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-4 sm:gap-8.5">
+          <div className="flex flex-wrap items-center gap-4 motion-safe:animate-fade-up sm:gap-8.5" style={{ animationDelay: "1000ms" }}>
             <ButtonLink href="/membership">Become a Member</ButtonLink>
             <ButtonLink href="/packages" variant="ghost">
               View Services
@@ -49,7 +61,7 @@ function Hero() {
         </div>
 
         <div className="mt-auto flex flex-col gap-10 pt-16 pb-10 lg:flex-row lg:items-end lg:justify-between lg:pb-24">
-          <div className="hidden flex-wrap gap-x-42 gap-y-6 md:flex">
+          <div className="hidden flex-wrap gap-x-42 gap-y-6 motion-safe:animate-fade-up md:flex" style={{ animationDelay: "1300ms" }}>
             {heroQuotes.map((quote, i) => (
               <figure key={i} className="flex max-w-100 items-center gap-4">
                 <span aria-hidden className="h-11.5 w-px shrink-0 bg-haze" />
@@ -58,7 +70,7 @@ function Hero() {
             ))}
           </div>
 
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 motion-safe:animate-fade-up" style={{ animationDelay: "1450ms" }}>
             <div className="flex -space-x-3">
               {[1, 2, 3, 4, 5].map((n) => (
                 <Image
@@ -67,12 +79,14 @@ function Hero() {
                   alt=""
                   width={40}
                   height={40}
-                  className="size-10 rounded-full border-2 border-black object-cover"
+                  className="size-10 rounded-full border-2 border-black object-cover transition-transform duration-300 hover:z-10 hover:-translate-y-1 hover:scale-110"
                 />
               ))}
             </div>
             <div className="flex flex-col gap-2">
-              <p className="text-4xl font-medium tracking-display">500+</p>
+              <p className="text-4xl font-medium tracking-display">
+                <CountUp value={500} suffix="+" />
+              </p>
               <p className="text-lg tracking-display text-mist">Healthy members</p>
             </div>
           </div>
@@ -88,14 +102,17 @@ function Partners() {
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-black to-surface py-24 lg:py-36">
       {/* Orange horizon glow from the design */}
-      <div aria-hidden className="absolute -top-16 left-1/2 h-24 w-11/12 -translate-x-1/2 rounded-full bg-brand/60 blur-3xl" />
+      <div aria-hidden className="absolute -top-16 left-1/2 h-24 w-11/12 -translate-x-1/2 rounded-full bg-brand/60 blur-3xl motion-safe:animate-glow" />
       <div aria-hidden className="absolute -top-10 left-1/2 h-14 w-full -translate-x-1/2 rounded-full border-b border-brand/70" />
 
       <Container className="relative">
         <SectionHeading
           title={
             <>
-              Partnered with <span className="text-brand">10+ companies</span>
+              Partnered with{" "}
+              <span className="text-brand">
+                <CountUp value={10} suffix="+" duration={1200} /> companies
+              </span>
             </>
           }
         >
@@ -103,20 +120,22 @@ function Partners() {
           partners who make your goal much more attainable.
         </SectionHeading>
 
-        <ul className="mt-16 grid grid-cols-2 items-center justify-items-center gap-x-10 gap-y-12 sm:grid-cols-3 lg:mt-20 lg:flex lg:justify-between">
+      </Container>
+      <div data-reveal className="relative mt-16 lg:mt-20">
+        <Marquee label="Partner brands">
           {partners.map((p) => (
-            <li key={p.src}>
+            <li key={p.src} className="shrink-0">
               <Image
                 src={p.src}
                 alt={p.name}
                 width={p.width}
                 height={p.height}
-                className="h-auto max-h-14 w-auto max-w-40 opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0 xl:max-w-52"
+                className="h-auto max-h-12 w-auto max-w-36 opacity-70 grayscale transition duration-300 hover:scale-110 hover:opacity-100 hover:grayscale-0 lg:max-h-14 lg:max-w-48"
               />
             </li>
           ))}
-        </ul>
-      </Container>
+        </Marquee>
+      </div>
     </section>
   );
 }
@@ -132,12 +151,12 @@ function Programs() {
         </SectionHeading>
 
         <div className="mt-16 flex items-end justify-between gap-6 lg:mt-24">
-          <h3 className="text-3xl font-bold tracking-display lg:text-subsection">General Programs</h3>
+          <h3 data-reveal className="text-3xl font-bold tracking-display lg:text-subsection">General Programs</h3>
           <Link href="/programs" className="shrink-0 text-base font-medium text-brand hover:underline">
             View all programs
           </Link>
         </div>
-        <div className="mt-8 grid gap-8 lg:grid-cols-2">
+        <div data-reveal-group className="mt-8 grid gap-8 lg:grid-cols-2">
           {programs
             .filter((p) => p.featured)
             .map((program) => (
@@ -145,7 +164,7 @@ function Programs() {
             ))}
         </div>
 
-        <div id="classes" className="mt-20 flex scroll-mt-10 flex-col gap-6 lg:mt-24">
+        <div id="classes" data-reveal className="mt-20 flex scroll-mt-10 flex-col gap-6 lg:mt-24">
           <div className="flex items-end justify-between gap-6">
             <h3 className="text-3xl font-bold tracking-display lg:text-subsection">Group and Specialized Classes</h3>
             <Link href="/classes" className="shrink-0 text-base font-medium text-brand hover:underline">
@@ -158,7 +177,7 @@ function Programs() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div data-reveal-group className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {gxClasses
             .filter((c) => c.home)
             .map((c) => (
@@ -176,7 +195,7 @@ function Consultation() {
   return (
     <section className="relative overflow-hidden bg-black">
       <Container className="relative grid items-center gap-10 pt-24 lg:min-h-136 lg:grid-cols-2 lg:pt-0">
-        <div className="relative z-10 flex flex-col items-start gap-12 lg:py-30">
+        <div data-reveal className="relative z-10 flex flex-col items-start gap-12 lg:py-30">
           <SectionHeading title="Not sure what you need?">
             We provide a complimentary consultation to assess your body composition, dietary restrictions, and other factors. This allows us
             to tailor a program specifically designed to meet your unique needs.
@@ -186,8 +205,8 @@ function Consultation() {
           </ButtonLink>
         </div>
 
-        <div className="relative h-96 sm:h-120 lg:h-full">
-          <div aria-hidden className="absolute top-1/2 left-1/2 size-80 -translate-x-1/2 -translate-y-1/3 rounded-full bg-brand/50 blur-3xl sm:size-120" />
+        <div data-reveal="scale" className="relative h-96 sm:h-120 lg:h-full">
+          <div aria-hidden className="absolute top-1/2 left-1/2 size-80 -translate-x-1/2 -translate-y-1/3 rounded-full bg-brand/50 blur-3xl motion-safe:animate-glow sm:size-120" />
           <Image
             src="/images/consult-coach.png"
             alt="Hustle & Muscle coach"
@@ -224,22 +243,24 @@ function Membership() {
 function Experiences() {
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-black to-surface-deep py-24 lg:py-28">
-      <div aria-hidden className="absolute -bottom-10 left-1/2 h-20 w-full -translate-x-1/2 rounded-full bg-brand/30 blur-3xl" />
+      <div aria-hidden className="absolute -bottom-10 left-1/2 h-20 w-full -translate-x-1/2 rounded-full bg-brand/30 blur-3xl motion-safe:animate-glow" />
       <Container className="relative">
-        <h2 className="text-4xl font-medium tracking-display md:text-5xl lg:text-section">One Gym. Different Experiences.</h2>
+        <h2 data-reveal className="text-4xl font-medium tracking-display md:text-5xl lg:text-section">One Gym. Different Experiences.</h2>
 
         <div className="mt-12 grid items-center gap-12 lg:mt-20 lg:grid-cols-12 lg:gap-20">
           <Link
             href="/stories/alex"
+            data-reveal="scale"
             className="group relative block aspect-video overflow-hidden lg:col-span-8 lg:aspect-auto lg:h-180"
             aria-label="View Alex's full interview"
           >
-            <Image src="/images/interview.jpg" alt="" fill sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
+            <Image src="/images/interview.jpg" alt="" fill sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover transition duration-1000 ease-snappy group-hover:scale-105" />
             <span aria-hidden className="absolute inset-0 bg-black/50 transition-colors group-hover:bg-black/40" />
-            <Triangle className="absolute top-1/2 left-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-white transition group-hover:scale-110 group-hover:text-brand lg:size-25" />
+            <span aria-hidden className="absolute top-1/2 left-1/2 size-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/40 motion-safe:animate-ping lg:size-36" />
+            <Triangle className="absolute top-1/2 left-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-white transition duration-300 group-hover:scale-110 group-hover:text-brand lg:size-25" />
           </Link>
 
-          <div className="flex flex-col items-start gap-12 lg:col-span-4">
+          <div data-reveal className="flex flex-col items-start gap-12 lg:col-span-4">
             <blockquote className="flex flex-col gap-8">
               <p className="text-3xl font-semibold tracking-display italic lg:text-quote">
                 <span className="text-brand">Joining Hustle &amp; Muscle changed how I see fitness.</span> I feel stronger, more confident,
@@ -255,8 +276,8 @@ function Experiences() {
           </div>
         </div>
 
-        <h3 className="mt-24 text-3xl font-medium tracking-display lg:mt-28 lg:text-heading">Let&apos;s Hear From Our Members</h3>
-        <div className="mt-10 grid gap-10 md:grid-cols-3 lg:gap-8">
+        <h3 data-reveal className="mt-24 text-3xl font-medium tracking-display lg:mt-28 lg:text-heading">Let&apos;s Hear From Our Members</h3>
+        <div data-reveal-group className="mt-10 grid gap-10 md:grid-cols-3 lg:gap-8">
           {testimonials.map((t) => (
             <figure key={t.name} className="flex gap-4">
               <span aria-hidden className="w-px shrink-0 bg-white/60" />

@@ -26,7 +26,7 @@ export default function MealPlansPage() {
       <section id="plans" className="scroll-mt-10 bg-linear-to-b from-black to-surface py-20 lg:py-24">
         <Container>
           <SectionHeading title="Eat for your goal.">Three starting points. Your coach fine-tunes the details after your assessment.</SectionHeading>
-          <div className="mt-14 grid gap-8 lg:grid-cols-3">
+          <div data-reveal-group className="mt-14 grid gap-8 lg:grid-cols-3">
             {mealPlans.map((plan) => (
               <ChamferCard key={plan.title} glow={!!plan.badge}>
                 <div className="flex h-full flex-col gap-8 px-6 py-8 sm:px-10">
@@ -79,7 +79,7 @@ export default function MealPlansPage() {
             <SectionHeading title="A sample day">
               Real food, local favorites, sensible portions. Here&apos;s what a day on the Fat Loss plan can look like.
             </SectionHeading>
-            <ol className="w-full divide-y divide-white/10 border-y border-white/10">
+            <ol data-reveal-group className="w-full divide-y divide-white/10 border-y border-white/10">
               {sampleDay.map((item) => (
                 <li key={item.meal} className="grid gap-2 py-5 sm:grid-cols-4 sm:gap-6">
                   <span className="text-lg font-semibold tracking-display text-brand italic">{item.meal}</span>

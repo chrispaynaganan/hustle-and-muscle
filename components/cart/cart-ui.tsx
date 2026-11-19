@@ -14,7 +14,7 @@ export function CartButton({ className = "" }: { className?: string }) {
     <Link href="/cart" aria-label={`Cart, ${count} item${count === 1 ? "" : "s"}`} className={`relative flex size-11 items-center justify-center transition-colors hover:text-brand ${className}`}>
       <Bag className="size-6" />
       {ready && count > 0 && (
-        <span className="absolute top-0.5 right-0 flex size-5 items-center justify-center rounded-full bg-brand text-xs font-medium text-white">
+        <span key={count} className="absolute top-0.5 right-0 flex size-5 items-center justify-center rounded-full bg-brand text-xs font-medium text-white motion-safe:animate-bump">
           {count > 9 ? "9+" : count}
         </span>
       )}
@@ -36,7 +36,7 @@ export function AddToCartButton({ item, label = "Add to Cart", variant = "solid"
   return (
     <button type="button" onClick={() => add(item)} className={buttonClasses(variant, `cursor-pointer ${className}`)}>
       <span>{inCart && item.kind !== "product" ? "In Your Cart" : label}</span>
-      {inCart && item.kind !== "product" ? <Check className="size-5 shrink-0" /> : <ArrowUpRight className="size-6 shrink-0" />}
+      {inCart && item.kind !== "product" ? <Check className="size-5 shrink-0" /> : <ArrowUpRight className="size-6 shrink-0 transition-transform duration-300 ease-snappy group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />}
     </button>
   );
 }

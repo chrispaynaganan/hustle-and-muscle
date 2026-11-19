@@ -21,7 +21,7 @@ export default function CareersPage() {
       <section className="bg-linear-to-b from-black to-surface py-20 lg:py-24">
         <Container>
           <SectionHeading title="Open Roles">Pick a role to see the full description, or apply straight away.</SectionHeading>
-          <ul className="mt-14 grid gap-8 lg:grid-cols-3">
+          <ul data-reveal-group className="mt-14 grid gap-8 lg:grid-cols-3">
             {roles.map((r) => (
               <li key={r.slug}>
                 <ChamferCard size="sm" glow={false} className="h-full">
@@ -46,7 +46,7 @@ export default function CareersPage() {
       <section id="apply" className="scroll-mt-10 bg-linear-to-b from-surface to-black py-20 lg:py-24">
         <Container className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
           <SectionHeading title="Don't see your role?">Send us your details anyway. We&apos;re always looking for great people.</SectionHeading>
-          <ChamferCard>
+          <ChamferCard hover={false}>
             <div className="px-6 py-10 sm:px-10.5">
               <SimpleForm
                 submitLabel="Submit Application"

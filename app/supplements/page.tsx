@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ChamferCard } from "@/components/chamfer-card";
+import { Marquee } from "@/components/motion/marquee";
 import { Container, PageHero, SectionHeading } from "@/components/page-hero";
 import { CtaBand, StepList } from "@/components/sections";
 import { ProductGrid, ShopTabs } from "@/components/shop/product-grid";
@@ -40,7 +41,7 @@ export default function SupplementsPage() {
       <section id="categories" className="scroll-mt-10 bg-linear-to-b from-surface to-black py-20 lg:py-24">
         <Container>
           <SectionHeading title="What to take, and why">A quick guide to each category, so you only buy what helps your goal.</SectionHeading>
-          <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-reveal-group className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {supplementCategories.map((item, i) => (
               <li key={item.title}>
                 <ChamferCard size="sm" glow={i < 3} className="h-full">
@@ -62,19 +63,23 @@ export default function SupplementsPage() {
 
       {/* Brands */}
       <section id="brands" className="relative scroll-mt-10 overflow-hidden bg-black py-20 lg:py-24">
-        <div aria-hidden className="absolute -top-16 left-1/2 h-24 w-11/12 -translate-x-1/2 rounded-full bg-brand/40 blur-3xl" />
+        <div aria-hidden className="absolute -top-16 left-1/2 h-24 w-11/12 -translate-x-1/2 rounded-full bg-brand/40 blur-3xl motion-safe:animate-glow" />
         <Container className="relative">
           <SectionHeading title={<>From brands we <span className="text-brand">trust</span></>}>
             We partner with brands our coaches actually use, so you&apos;re not guessing what&apos;s in the tub.
           </SectionHeading>
-          <ul className="mt-14 grid grid-cols-2 items-center justify-items-center gap-x-10 gap-y-12 sm:grid-cols-3 lg:mt-16 lg:flex lg:justify-between">
-            {partners.filter((p) => !["VeritasPay", "Garmin"].includes(p.name)).map((p) => (
-              <li key={p.src}>
-                <Image src={p.src} alt={p.name} width={p.width} height={p.height} className="h-auto max-h-14 w-auto max-w-40 xl:max-w-52" />
-              </li>
-            ))}
-          </ul>
         </Container>
+        <div data-reveal className="relative mt-14 lg:mt-16">
+          <Marquee label="Supplement partner brands" repeat={3}>
+            {partners
+              .filter((p) => !["VeritasPay", "Garmin"].includes(p.name))
+              .map((p) => (
+                <li key={p.src} className="shrink-0">
+                  <Image src={p.src} alt={p.name} width={p.width} height={p.height} className="h-auto max-h-12 w-auto max-w-36 transition duration-300 hover:scale-110 lg:max-h-14 lg:max-w-48" />
+                </li>
+              ))}
+          </Marquee>
+        </div>
       </section>
 
       {/* Guidance */}

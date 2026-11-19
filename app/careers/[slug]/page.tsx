@@ -45,7 +45,7 @@ export default async function RolePage({ params }: Props) {
 
       <section className="bg-linear-to-b from-surface to-black py-20 lg:py-24">
         <Container className="grid items-start gap-14 lg:grid-cols-3 lg:gap-20">
-          <div className="flex flex-col gap-14 lg:col-span-2">
+          <div data-reveal-group className="flex flex-col gap-14 lg:col-span-2">
             <div className="flex flex-col gap-6">
               <h2 className="text-3xl font-bold tracking-display lg:text-subsection">About the role</h2>
               {role.about.map((p) => (
@@ -89,7 +89,7 @@ export default async function RolePage({ params }: Props) {
               See other open roles
             </Link>
           </div>
-          <ChamferCard>
+          <ChamferCard hover={false}>
             <div className="px-6 py-10 sm:px-10.5">
               <SimpleForm
                 submitLabel="Submit Application"

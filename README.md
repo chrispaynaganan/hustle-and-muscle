@@ -86,6 +86,20 @@ public/images/          Images exported from Figma
 
 All copy and prices live in `lib/`, so updating the site is usually a one-file edit.
 
+## Animation
+
+All motion respects the visitor's "reduce motion" setting, which turns it off completely.
+
+| Layer | Where | How |
+| --- | --- | --- |
+| Hover and press | Buttons (arrow nudges, press shrink), nav underline, dropdowns, cards lift with an orange glow, product and coach photos zoom | Tailwind transitions |
+| Scroll reveal | Headings, cards and lists ease up as they enter the screen, with a stagger inside grids | Add `data-reveal` to an element, or `data-reveal-group` to a list to stagger its children (`components/motion/reveal-observer.tsx`) |
+| Page entrance | Hero headlines slide up word by word, the photo settles from a slow zoom, then the text and buttons fade in. Every page fades in on navigation | `SplitWords`, `animate-hero-zoom`, `app/template.tsx` |
+| Numbers | "500+ members", "10+ companies" and About stats count up | `CountUp` |
+| Signature motion | Partner logos scroll in an endless strip, orange glows breathe, the play button pulses, hero photos drift slower than the page, an orange progress bar tracks scrolling, the header shrinks and hides on scroll down then returns on scroll up, the cart badge pops when you add an item | `Marquee`, `animate-glow`, `parallax`, `scroll-progress`, `site-header.tsx` |
+
+Timings and keyframes live in `app/globals.css` under *Motion*.
+
 ## Design tokens
 
 All design values are named tokens in `app/globals.css` (`text-brand`, `text-section`, `tracking-display`, `max-w-site`, `chamfer`, …), so the markup uses canonical Tailwind classes only — no arbitrary `[px]` values.

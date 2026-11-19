@@ -22,7 +22,7 @@ export default function ProgramsPage() {
       <section className="bg-linear-to-b from-black to-surface py-20 lg:py-24">
         <Container>
           <SectionHeading title="General Programs">Pick the goal. Your coach handles the plan.</SectionHeading>
-          <div className="mt-14 grid gap-8 lg:grid-cols-2">
+          <div data-reveal-group className="mt-14 grid gap-8 lg:grid-cols-2">
             {programs.map((p) => (
               <ProgramCard key={p.slug} program={p} />
             ))}

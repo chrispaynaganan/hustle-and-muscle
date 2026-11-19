@@ -22,7 +22,7 @@ export default function FaqsPage() {
               </a>
             ))}
           </nav>
-          <div className="flex flex-col gap-16 lg:col-span-3">
+          <div data-reveal-group className="flex flex-col gap-16 lg:col-span-3">
             {faqGroups.map((g) => (
               <div key={g.id} id={g.id} className="scroll-mt-10">
                 <h2 className="mb-6 text-3xl font-bold tracking-display lg:text-subsection">{g.title}</h2>

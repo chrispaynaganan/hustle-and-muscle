@@ -106,7 +106,7 @@ export function MembershipPlans() {
 
   return (
     <>
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div data-reveal-group className="grid gap-8 lg:grid-cols-2">
         <ChamferCard>
           <div className="flex flex-col gap-12 px-6 py-10 sm:px-10.5 lg:py-14">
             <div className="flex flex-col gap-4.5">
@@ -133,7 +133,7 @@ export function MembershipPlans() {
           </div>
         </ChamferCard>
 
-        <div className="grid gap-8 sm:grid-cols-2">
+        <div data-reveal-group className="grid gap-8 sm:grid-cols-2">
           {longer.map((m) => (
             <ChamferCard key={m.slug} size="sm">
               <div className="flex h-full flex-col gap-7 px-6 py-8 sm:px-10.5">
@@ -148,10 +148,10 @@ export function MembershipPlans() {
       </div>
 
       <div id="day-pass" className="mt-8 grid scroll-mt-10 items-start gap-8 lg:grid-cols-2">
-        <p className="max-w-196 pt-2 text-lg tracking-display md:text-2xl lg:pt-8">
+        <p data-reveal className="max-w-196 pt-2 text-lg tracking-display md:text-2xl lg:pt-8">
           Not sure if Hustle and Muscle is right for you yet? We offer a day pass to test us out.
         </p>
-        <div className="grid gap-8 sm:grid-cols-2">
+        <div data-reveal-group className="grid gap-8 sm:grid-cols-2">
           {passes.map((d) => (
             <ChamferCard key={d.slug} size="sm" glow={false}>
               <div className="flex flex-col gap-4.5 px-6 py-8 sm:px-10.5">

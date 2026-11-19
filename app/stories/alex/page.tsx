@@ -55,7 +55,7 @@ export default function AlexStoryPage() {
 
       <section className="bg-linear-to-b from-surface to-black py-20 lg:py-24">
         <Container>
-          <div className="flex max-w-196 flex-col gap-12">
+          <div data-reveal-group className="flex max-w-196 flex-col gap-12">
             <h1 className="text-4xl font-bold tracking-display md:text-5xl lg:text-section">The full interview</h1>
             {interview.map((item) => (
               <div key={item.q} className="flex flex-col gap-4 border-t border-white/10 pt-8">

@@ -77,7 +77,7 @@ export default async function CoachPage({ params }: Props) {
                 ))}
               </div>
 
-              <div className="grid gap-10 sm:grid-cols-2">
+              <div data-reveal-group className="grid gap-10 sm:grid-cols-2">
                 <div className="flex flex-col gap-5">
                   <h2 className="text-xl font-semibold tracking-display italic">Specialties</h2>
                   <ul className="flex flex-col gap-3 text-lg tracking-display">
@@ -119,7 +119,7 @@ export default async function CoachPage({ params }: Props) {
         <section className="bg-linear-to-b from-surface to-black py-20 lg:py-24">
           <Container>
             <SectionHeading title={`Train with ${coach.name.split(" ")[1]}`}>Programs and GX classes led by this coach.</SectionHeading>
-            <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div data-reveal-group className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {coachPrograms.map((p) => (
                 <ChamferCard key={p.slug} size="sm" className="h-full">
                   <Link href={`/programs/${p.slug}`} className="group flex h-full flex-col gap-6 px-6 py-8 sm:px-10">
@@ -149,7 +149,7 @@ export default async function CoachPage({ params }: Props) {
               All Coaches
             </ButtonLink>
           </div>
-          <ul className="mt-12 grid gap-6 sm:grid-cols-3 lg:gap-8">
+          <ul data-reveal-group className="mt-12 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {others.map((c) => (
               <li key={c.slug}>
                 <Link href={`/coaches/${c.slug}`} className="group relative block aspect-portrait overflow-hidden bg-mist">

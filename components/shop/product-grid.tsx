@@ -5,9 +5,9 @@ import { ProductArt } from "./product-art";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
-    <Link href={`/shop/${product.slug}`} className="group flex h-full flex-col">
+    <Link href={`/shop/${product.slug}`} className="group flex h-full flex-col transition-transform duration-500 ease-snappy hover:-translate-y-1.5">
       <div className="chamfer-sm relative aspect-square overflow-hidden bg-linear-to-br from-surface to-black">
-        <ProductArt kind={product.art} color={product.color} className="size-full transition duration-500 group-hover:scale-105" />
+        <ProductArt kind={product.art} color={product.color} className="size-full transition duration-700 ease-snappy group-hover:scale-110 group-hover:-rotate-2" />
         {product.badge && <span className="absolute top-4 left-4 bg-brand px-3 py-1.5 text-sm font-medium tracking-display">{product.badge}</span>}
       </div>
       <div className="mt-5 flex flex-1 flex-col gap-2">
@@ -22,7 +22,7 @@ export function ProductCard({ product }: { product: Product }) {
 
 export function ProductGrid({ products }: { products: Product[] }) {
   return (
-    <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+    <ul data-reveal-group className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
       {products.map((p) => (
         <li key={p.slug}>
           <ProductCard product={p} />

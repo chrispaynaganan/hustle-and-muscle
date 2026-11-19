@@ -40,7 +40,7 @@ export default function ReferPage() {
             </SectionHeading>
             <p className="text-base tracking-display text-graphite">Referred friends must be new members. One reward per new member. Rewards can&apos;t be exchanged for cash.</p>
           </div>
-          <ChamferCard>
+          <ChamferCard hover={false}>
             <div className="px-6 py-10 sm:px-10.5">
               <SimpleForm
                 submitLabel="Send Referral"
