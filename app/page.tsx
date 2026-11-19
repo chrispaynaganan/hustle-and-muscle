@@ -38,12 +38,12 @@ function Hero() {
       <div aria-hidden className="absolute inset-0 bg-linear-to-b from-transparent from-55% to-night" />
 
       <Container className="relative flex flex-1 flex-col">
-        <div className="flex max-w-194.5 flex-col gap-10 lg:gap-16">
+        <div className="flex max-w-220 flex-col gap-10 lg:gap-16">
           <div className="flex flex-col gap-8 lg:gap-12">
             <h1 className="text-6xl leading-none font-medium tracking-display sm:text-8xl xl:text-hero">
               Build the Body That <span className="text-brand">Powers</span> Your Life.
             </h1>
-            <p className="text-xl tracking-display md:text-3xl lg:text-heading lg:leading-snug">
+            <p className="max-w-194.5 text-xl tracking-display md:text-3xl lg:text-heading lg:leading-snug">
               We are dedicated to helping you achieve your fitness goals and improve your overall health and well-being.
             </p>
           </div>
@@ -142,7 +142,8 @@ function Programs() {
         <div className="mt-8 grid gap-8 lg:grid-cols-2">
           {generalPrograms.map((program) => (
             <ChamferCard key={program.title} innerClassName="flex flex-col">
-              <Image src={program.image} alt="" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover opacity-40" />
+              <Image src={program.image} alt="" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover object-right" />
+              <div aria-hidden className="absolute inset-0 bg-black/60 lg:bg-linear-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
               <div className="relative flex flex-1 flex-col gap-12 px-6 py-8 sm:px-10.5 lg:max-w-138">
                 <div className="flex flex-col gap-4.5">
                   {program.badge && <span className="self-start bg-brand p-3 text-lg font-medium tracking-display">{program.badge}</span>}

@@ -4,12 +4,12 @@ export const heroQuotes = [
 ];
 
 export const partners = [
-  { name: "Partner 1", src: "/images/partner-1.png", width: 95, height: 25 },
-  { name: "Partner 2", src: "/images/partner-2.png", width: 184, height: 40 },
-  { name: "Partner 3", src: "/images/partner-3.png", width: 125, height: 35 },
-  { name: "Partner 4", src: "/images/partner-4.png", width: 139, height: 63 },
-  { name: "Partner 5", src: "/images/partner-5.png", width: 180, height: 49 },
-  { name: "Partner 6", src: "/images/partner-6.png", width: 203, height: 55 },
+  { name: "Blitz", src: "/images/partner-1.png", width: 480, height: 127 },
+  { name: "VeritasPay", src: "/images/partner-2.png", width: 480, height: 103 },
+  { name: "Shua", src: "/images/partner-3.png", width: 480, height: 126 },
+  { name: "Ghost", src: "/images/partner-4.png", width: 331, height: 160 },
+  { name: "Athlene", src: "/images/partner-5.png", width: 480, height: 119 },
+  { name: "Garmin", src: "/images/partner-6.png", width: 480, height: 129 },
 ];
 
 export type Program = {
@@ -34,7 +34,7 @@ export const generalPrograms: Program[] = [
     coach: "Assigned upon assessment",
     howItWorks: "Personalized training focused on fat loss through strength, conditioning, and lifestyle guidance.",
     primaryCta: "Join the Program",
-    image: "/images/program-1.png",
+    image: "/images/program-1.jpg",
   },
   {
     badge: "Most Popular",
@@ -46,7 +46,7 @@ export const generalPrograms: Program[] = [
     howItWorks:
       "Members train under structured strength programs with progressive loading. One coach can handle multiple clients at different levels.",
     primaryCta: "Start Training Today",
-    image: "/images/program-2.png",
+    image: "/images/program-2.jpg",
   },
 ];
 

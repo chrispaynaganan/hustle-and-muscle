@@ -57,7 +57,7 @@ export default function ContactPage() {
               <ChamferCard>
                 <a href={mapsUrl} target="_blank" rel="noreferrer" className="group relative block aspect-square sm:aspect-video lg:aspect-square">
                   <Image
-                    src="/images/map.png"
+                    src="/images/map.jpg"
                     alt="Map showing Hustle and Muscle Fitness Gym near Narra Street, Greenwoods Executive Village"
                     fill
                     sizes="(min-width: 1024px) 50vw, 100vw"
