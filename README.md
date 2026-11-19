@@ -60,3 +60,4 @@ All design values are named tokens in `app/globals.css` (`text-brand`, `text-sec
 - Replace the placeholder social links in `lib/site.ts`.
 - Swap the stock coach photos for real ones in `public/images/coach-*.jpg`.
 - Design and build About, Meal Plans and Supplements.
+# hustle-and-muscle
