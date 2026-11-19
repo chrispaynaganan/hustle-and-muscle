@@ -52,6 +52,9 @@
   --aspect-portrait: 506 / 731;
 }
 
+/* Hides the default <summary> triangle in Safari. */
+@custom-variant details-marker (&::-webkit-details-marker);
+
 /* Cut-corner shape used across cards (top-right + bottom-left). */
 @utility chamfer {
   clip-path: polygon(0 0, calc(100% - 2.5rem) 0, 100% 2.5rem, 100% 100%, 2.5rem 100%, 0 calc(100% - 2.5rem));

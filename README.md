@@ -11,7 +11,9 @@ Built with **Next.js (App Router)**, **React**, **TypeScript** and **Tailwind CS
 | `/` | Figma "Homepage" — hero, partners, programs, classes, consultation, memberships, member stories |
 | `/contact` | Figma "Contact Us" — how it works, inquiry form, map |
 | `/coaches` | Figma "Coaches" — coach cards |
-| `/about`, `/meal-plans`, `/supplements` | No design yet — styled "Coming Soon" placeholders so the nav doesn't 404 |
+| `/about` | Designed in the same style — story and stats, values, facility, coaches preview, location |
+| `/meal-plans` | Designed in the same style — plans by goal, how it works, sample day, FAQs |
+| `/supplements` | Designed in the same style — product categories, partner brands, coach guidance |
 
 The newsletter and contact forms validate and show a success state but don't send anywhere yet (see *Next steps*).
 
@@ -39,7 +41,7 @@ app/
   page.tsx              Homepage sections
   contact/              Contact page + client-side form
   coaches/              Coaches grid
-  about | meal-plans | supplements   Placeholders
+  about | meal-plans | supplements   Pages without Figma designs, built from the same components
   globals.css           Tailwind v4 theme tokens (colors, type scale, chamfer shapes)
 components/             Header, footer, buttons, cut-corner card, icons
 lib/
@@ -59,5 +61,4 @@ All design values are named tokens in `app/globals.css` (`text-brand`, `text-sec
 - Wire the contact and newsletter forms to something real (a Next.js Server Action + Resend, Formspree, or a Google Sheet).
 - Replace the placeholder social links in `lib/site.ts`.
 - Swap the stock coach photos for real ones in `public/images/coach-*.jpg`.
-- Design and build About, Meal Plans and Supplements.
-# hustle-and-muscle
+- Review the placeholder copy on About, Meal Plans and Supplements (in `lib/content.ts`) and replace it with the gym's real details.

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ChamferCard } from "@/components/chamfer-card";
-import { Triangle } from "@/components/icons";
 import { Container, PageHero, SectionHeading } from "@/components/page-hero";
+import { StepList } from "@/components/sections";
 import { contactSteps } from "@/lib/content";
 import { site } from "@/lib/site";
 import { ContactForm } from "./contact-form";
@@ -26,17 +26,9 @@ export default function ContactPage() {
             partners who make your goal much more attainable.
           </SectionHeading>
 
-          <ol className="mt-14 grid gap-10 sm:grid-cols-2 xl:grid-cols-4 xl:gap-12">
-            {contactSteps.map((step) => (
-              <li key={step.title} className="flex gap-4">
-                <Triangle className="mt-1 size-5 shrink-0 text-brand" />
-                <div className="flex flex-col gap-4 lg:gap-6">
-                  <h3 className="text-2xl font-medium tracking-display lg:text-heading">{step.title}</h3>
-                  <p className="text-lg tracking-display text-ash">{step.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div className="mt-14">
+            <StepList steps={contactSteps} />
+          </div>
         </Container>
       </section>
 

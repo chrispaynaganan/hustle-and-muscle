@@ -41,12 +41,19 @@ export const mainNav: NavItem[] = [
   {
     label: "Meal Plans",
     href: "/meal-plans",
-    children: [{ label: "Coming Soon", href: "/meal-plans" }],
+    children: [
+      { label: "Plans by Goal", href: "/meal-plans#plans" },
+      { label: "How it Works", href: "/meal-plans#how-it-works" },
+      { label: "Sample Day", href: "/meal-plans#sample-day" },
+    ],
   },
   {
     label: "Supplements",
     href: "/supplements",
-    children: [{ label: "Coming Soon", href: "/supplements" }],
+    children: [
+      { label: "What We Carry", href: "/supplements#categories" },
+      { label: "Our Brands", href: "/supplements#brands" },
+    ],
   },
   { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
@@ -60,14 +67,14 @@ export const footerNav = [
     { label: "Why Hustle & Muscle", href: "/about" },
   ],
   [
-    { label: "Blog", href: "/about" },
-    { label: "Events", href: "/about" },
-    { label: "Clubs", href: "/about" },
+    { label: "About Us", href: "/about" },
+    { label: "Meal Plans", href: "/meal-plans" },
+    { label: "Supplements", href: "/supplements" },
     { label: "Refer a Friend", href: "/contact" },
   ],
   [
     { label: "Contact Us", href: "/contact" },
-    { label: "FAQs", href: "/contact" },
+    { label: "FAQs", href: "/meal-plans#faqs" },
     { label: "Careers", href: "/contact" },
   ],
 ];
