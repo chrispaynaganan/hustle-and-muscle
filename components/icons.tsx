@@ -133,3 +133,29 @@ export function TikTok(props: IconProps) {
     </svg>
   );
 }
+
+export function Bag(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...base} {...props}>
+      <path d="M5 8h14l-1 12H6L5 8Z" />
+      <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+    </svg>
+  );
+}
+
+export function Trash(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...base} {...props}>
+      <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
+    </svg>
+  );
+}
+
+export function Clock(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...base} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </svg>
+  );
+}

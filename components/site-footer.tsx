@@ -40,10 +40,10 @@ export function SiteFooter() {
           </div>
 
           <ul className="flex flex-wrap items-center gap-x-8 gap-y-3 text-base tracking-display">
-            {policyLinks.map((label) => (
-              <li key={label}>
-                <Link href="/about" className="transition-colors hover:text-brand">
-                  {label}
+            {policyLinks.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="transition-colors hover:text-brand">
+                  {link.label}
                 </Link>
               </li>
             ))}

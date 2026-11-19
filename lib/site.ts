@@ -1,3 +1,5 @@
+import { coaches } from "./coaches";
+
 export const site = {
   name: "Hustle & Muscle",
   tagline: "Build the Body That Powers Your Life.",
@@ -23,11 +25,11 @@ export type NavItem = {
 export const mainNav: NavItem[] = [
   {
     label: "Packages",
-    href: "/#programs",
+    href: "/membership",
     children: [
-      { label: "General Programs", href: "/#programs" },
-      { label: "Group Classes", href: "/#classes" },
-      { label: "Memberships", href: "/#membership" },
+      { label: "Memberships", href: "/membership" },
+      { label: "General Programs", href: "/programs" },
+      { label: "GX Classes", href: "/classes" },
     ],
   },
   {
@@ -35,7 +37,7 @@ export const mainNav: NavItem[] = [
     href: "/coaches",
     children: [
       { label: "Meet the Coaches", href: "/coaches" },
-      { label: "Book an Assessment", href: "/contact" },
+      ...coaches.map((c) => ({ label: c.name.replace("Coach ", ""), href: `/coaches/${c.slug}` })),
     ],
   },
   {
@@ -48,11 +50,12 @@ export const mainNav: NavItem[] = [
     ],
   },
   {
-    label: "Supplements",
-    href: "/supplements",
+    label: "Shop",
+    href: "/shop",
     children: [
-      { label: "What We Carry", href: "/supplements#categories" },
-      { label: "Our Brands", href: "/supplements#brands" },
+      { label: "Supplements", href: "/supplements" },
+      { label: "Merch", href: "/merch" },
+      { label: "All Products", href: "/shop" },
     ],
   },
   { label: "About Us", href: "/about" },
@@ -61,22 +64,29 @@ export const mainNav: NavItem[] = [
 
 export const footerNav = [
   [
-    { label: "Membership", href: "/#membership" },
-    { label: "Personal Training", href: "/#programs" },
-    { label: "Classes", href: "/#classes" },
-    { label: "Why Hustle & Muscle", href: "/about" },
+    { label: "Membership", href: "/membership" },
+    { label: "Personal Training", href: "/programs" },
+    { label: "Classes", href: "/classes" },
+    { label: "Why Hustle & Muscle", href: "/why-hustle-and-muscle" },
   ],
   [
     { label: "About Us", href: "/about" },
     { label: "Meal Plans", href: "/meal-plans" },
     { label: "Supplements", href: "/supplements" },
-    { label: "Refer a Friend", href: "/contact" },
+    { label: "Merch", href: "/merch" },
+    { label: "Refer a Friend", href: "/refer-a-friend" },
   ],
   [
     { label: "Contact Us", href: "/contact" },
-    { label: "FAQs", href: "/meal-plans#faqs" },
-    { label: "Careers", href: "/contact" },
+    { label: "FAQs", href: "/faqs" },
+    { label: "Careers", href: "/careers" },
+    { label: "Coaches", href: "/coaches" },
   ],
 ];
 
-export const policyLinks = ["Club Rules", "Cookie Policy", "Privacy Policy", "Terms and Conditions"];
+export const policyLinks = [
+  { label: "Club Rules", href: "/club-rules" },
+  { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms and Conditions", href: "/terms" },
+];

@@ -3,6 +3,8 @@ import Image from "next/image";
 import { ChamferCard } from "@/components/chamfer-card";
 import { Container, PageHero, SectionHeading } from "@/components/page-hero";
 import { CtaBand, StepList } from "@/components/sections";
+import { ProductGrid, ShopTabs } from "@/components/shop/product-grid";
+import { products } from "@/lib/products";
 import { partners, supplementCategories, supplementRules } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -15,15 +17,28 @@ export default function SupplementsPage() {
     <>
       <PageHero
         title="Supplements"
-        description="Trusted brands, honest advice. Pick up what you actually need, right at the front desk."
+        description="Trusted brands, honest advice. Order online, then pick up at the front desk or get it delivered."
         image="/images/program-2.jpg"
         imagePosition="object-right"
       />
 
-      {/* Categories */}
-      <section id="categories" className="scroll-mt-10 bg-linear-to-b from-black to-surface py-20 lg:py-24">
+      {/* Products */}
+      <section id="shop" className="scroll-mt-10 bg-linear-to-b from-black to-surface py-16 lg:py-24">
         <Container>
-          <SectionHeading title="What we carry">Ask at the front desk for current stock and member pricing.</SectionHeading>
+          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+            <SectionHeading title="Shop supplements">Coach-approved staples. Free pick-up at the gym.</SectionHeading>
+            <ShopTabs active="/supplements" />
+          </div>
+          <div className="mt-14">
+            <ProductGrid products={products.filter((p) => p.category === "supplements")} />
+          </div>
+        </Container>
+      </section>
+
+      {/* Categories */}
+      <section id="categories" className="scroll-mt-10 bg-linear-to-b from-surface to-black py-20 lg:py-24">
+        <Container>
+          <SectionHeading title="What to take, and why">A quick guide to each category, so you only buy what helps your goal.</SectionHeading>
           <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {supplementCategories.map((item, i) => (
               <li key={item.title}>
@@ -45,7 +60,7 @@ export default function SupplementsPage() {
       </section>
 
       {/* Brands */}
-      <section id="brands" className="relative scroll-mt-10 overflow-hidden bg-linear-to-b from-surface to-black py-20 lg:py-24">
+      <section id="brands" className="relative scroll-mt-10 overflow-hidden bg-black py-20 lg:py-24">
         <div aria-hidden className="absolute -top-16 left-1/2 h-24 w-11/12 -translate-x-1/2 rounded-full bg-brand/40 blur-3xl" />
         <Container className="relative">
           <SectionHeading title={<>From brands we <span className="text-brand">trust</span></>}>

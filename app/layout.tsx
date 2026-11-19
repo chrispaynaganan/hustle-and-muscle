@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
+import { CartProvider } from "@/components/cart/cart-provider";
+import { CartToast } from "@/components/cart/cart-ui";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { site } from "@/lib/site";
@@ -31,9 +33,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
+        <CartProvider>
+          <SiteHeader />
+          <main>{children}</main>
+          <SiteFooter />
+          <CartToast />
+        </CartProvider>
       </body>
     </html>
   );

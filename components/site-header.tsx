@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { mainNav, site } from "@/lib/site";
+import { CartButton } from "./cart/cart-ui";
 import { ArrowRight, ChevronDown, Close, Mail, Menu, NavigationPointer, Phone } from "./icons";
 
 export function SiteHeader() {
@@ -78,8 +79,9 @@ export function SiteHeader() {
                 );
               })}
             </ul>
+            <CartButton className="-mx-4" />
             <Link
-              href="/contact"
+              href="/membership"
               className="flex items-center gap-4 bg-white px-6 py-3 text-base font-medium text-brand transition-colors hover:bg-brand hover:text-white"
             >
               Become a Member
@@ -87,6 +89,8 @@ export function SiteHeader() {
             </Link>
           </nav>
 
+          <div className="flex items-center gap-1 lg:hidden">
+          <CartButton />
           <button
             type="button"
             onClick={() => setOpen(true)}
@@ -96,6 +100,7 @@ export function SiteHeader() {
           >
             <Menu className="size-7" />
           </button>
+          </div>
         </div>
       </div>
 
@@ -121,7 +126,7 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-        <Link href="/contact" className="mt-8 flex items-center justify-center gap-4 bg-brand px-6 py-4 text-lg font-medium">
+        <Link href="/membership" className="mt-8 flex items-center justify-center gap-4 bg-brand px-6 py-4 text-lg font-medium">
           Become a Member
           <ArrowRight className="size-5" />
         </Link>

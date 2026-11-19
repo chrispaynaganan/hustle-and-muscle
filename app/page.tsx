@@ -1,19 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/button";
-import { ChamferCard } from "@/components/chamfer-card";
-import { ArrowUpRight, Star, Triangle } from "@/components/icons";
+import { Star, Triangle } from "@/components/icons";
 import { Container, SectionHeading } from "@/components/page-hero";
-import {
-  dayPasses,
-  generalPrograms,
-  groupClasses,
-  heroQuotes,
-  longerMemberships,
-  monthlyInclusions,
-  partners,
-  testimonials,
-} from "@/lib/content";
+import { ClassCard, MembershipPlans, ProgramCard } from "@/components/training-cards";
+import { heroQuotes, partners, testimonials } from "@/lib/content";
+import { gxClasses, programs } from "@/lib/training";
 
 export default function HomePage() {
   return (
@@ -48,8 +40,8 @@ function Hero() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-4 sm:gap-8.5">
-            <ButtonLink href="/contact">Become a Member</ButtonLink>
-            <ButtonLink href="/#programs" variant="ghost">
+            <ButtonLink href="/membership">Become a Member</ButtonLink>
+            <ButtonLink href="/programs" variant="ghost">
               View Services
             </ButtonLink>
           </div>
@@ -138,50 +130,27 @@ function Programs() {
           Take a closer look at our highly competitive membership fees designed to help you accelerate your growth and achieve your goals!
         </SectionHeading>
 
-        <h3 className="mt-16 text-3xl font-bold tracking-display lg:mt-24 lg:text-subsection">General Programs</h3>
+        <div className="mt-16 flex items-end justify-between gap-6 lg:mt-24">
+          <h3 className="text-3xl font-bold tracking-display lg:text-subsection">General Programs</h3>
+          <Link href="/programs" className="shrink-0 text-base font-medium text-brand hover:underline">
+            View all programs
+          </Link>
+        </div>
         <div className="mt-8 grid gap-8 lg:grid-cols-2">
-          {generalPrograms.map((program) => (
-            <ChamferCard key={program.title} innerClassName="flex flex-col">
-              <Image src={program.image} alt="" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover object-right" />
-              <div aria-hidden className="absolute inset-0 bg-black/60 lg:bg-linear-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent" />
-              <div className="relative flex flex-1 flex-col gap-12 px-6 py-8 sm:px-10.5 lg:max-w-138">
-                <div className="flex flex-col gap-4.5">
-                  {program.badge && <span className="self-start bg-brand p-3 text-lg font-medium tracking-display">{program.badge}</span>}
-                  <h4 className="text-3xl font-bold tracking-display lg:text-heading">{program.title}</h4>
-                  <p className="mt-3 flex flex-wrap items-end gap-2">
-                    <span className="text-6xl font-bold tracking-display text-brand lg:text-price">{program.price}</span>
-                    <span className="text-2xl tracking-display text-mist lg:text-heading">{program.unit}</span>
-                  </p>
-                </div>
-                <dl className="flex flex-col gap-6 text-xl font-bold tracking-display lg:text-2xl">
-                  <div className="flex gap-2">
-                    <dt>Schedule:</dt>
-                    <dd>{program.schedule}</dd>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <dt>Coach:</dt>
-                    <dd>{program.coach}</dd>
-                  </div>
-                </dl>
-                <div className="flex flex-col gap-4 text-xl tracking-display lg:gap-7.5 lg:text-2xl">
-                  <p className="font-semibold italic">How it Works</p>
-                  <p>{program.howItWorks}</p>
-                </div>
-                <div className="mt-auto flex flex-wrap gap-4">
-                  <ButtonLink href="/contact" className="text-lg">
-                    {program.primaryCta}
-                  </ButtonLink>
-                  <ButtonLink href="/contact" variant="outline" icon={false}>
-                    Book a Free Assessment
-                  </ButtonLink>
-                </div>
-              </div>
-            </ChamferCard>
-          ))}
+          {programs
+            .filter((p) => p.featured)
+            .map((program) => (
+              <ProgramCard key={program.slug} program={program} />
+            ))}
         </div>
 
         <div id="classes" className="mt-20 flex scroll-mt-10 flex-col gap-6 lg:mt-24">
-          <h3 className="text-3xl font-bold tracking-display lg:text-subsection">Group and Specialized Classes</h3>
+          <div className="flex items-end justify-between gap-6">
+            <h3 className="text-3xl font-bold tracking-display lg:text-subsection">Group and Specialized Classes</h3>
+            <Link href="/classes" className="shrink-0 text-base font-medium text-brand hover:underline">
+              View all classes
+            </Link>
+          </div>
           <p className="max-w-196 text-lg tracking-display md:text-2xl">
             Train differently by joining group and specialized classes to boost not only strength but also your mobility. Plus, you get to
             enjoy it with other fitness enthusiasts.
@@ -189,34 +158,11 @@ function Programs() {
         </div>
 
         <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {groupClasses.map((c) => (
-            <ChamferCard key={c.title} size="sm" glow={!!c.featured} className={c.featured ? "md:col-span-2" : ""}>
-              <div className="flex h-full flex-col gap-8 px-6 py-8 sm:px-10.5">
-                <div className="flex flex-col gap-6">
-                  <h4 className="text-3xl font-bold tracking-display lg:text-heading">{c.title}</h4>
-                  <p className={`flex gap-2 ${c.featured ? "flex-wrap items-end" : "flex-col"}`}>
-                    <span className="text-5xl font-bold tracking-display text-brand lg:text-6xl">{c.price}</span>
-                    <span className="text-2xl tracking-display text-mist">{c.unit}</span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Image src="/images/coach-alex.png" alt="" width={32} height={32} className="size-8 rounded-full object-cover" />
-                  <span className="text-xl font-medium tracking-display">{c.coach}</span>
-                </div>
-                <p className="text-xl font-light tracking-display italic">{c.details}</p>
-                <div className="mt-auto flex flex-wrap gap-4">
-                  <ButtonLink href="/contact" className="text-lg">
-                    Join the Program{c.slotsLeft ? ` (${c.slotsLeft} slots left)` : ""}
-                  </ButtonLink>
-                  {c.featured && (
-                    <ButtonLink href="/contact" variant="outline" icon={false}>
-                      Book a Free Assessment
-                    </ButtonLink>
-                  )}
-                </div>
-              </div>
-            </ChamferCard>
-          ))}
+          {gxClasses
+            .filter((c) => c.home)
+            .map((c) => (
+              <ClassCard key={c.slug} gx={c} wide={c.featured} />
+            ))}
         </div>
       </Container>
     </section>
@@ -264,61 +210,8 @@ function Membership() {
         <SectionHeading title="Elevate Your Growth">
           Take a closer look at our highly competitive membership fees designed to help you accelerate your growth and achieve your goals!
         </SectionHeading>
-
-        <div className="mt-16 grid gap-8 lg:mt-20 lg:grid-cols-2">
-          <ChamferCard>
-            <div className="flex flex-col gap-12 px-6 py-10 sm:px-10.5 lg:py-14">
-              <div className="flex flex-col gap-4.5">
-                <span className="self-start bg-brand p-3 text-lg font-medium tracking-display">Most Flexible</span>
-                <h3 className="text-3xl font-bold tracking-display lg:text-heading">Monthly Membership</h3>
-                <p className="mt-3 flex flex-wrap items-end gap-2">
-                  <span className="text-6xl font-bold tracking-display text-brand lg:text-price">₱2,500</span>
-                  <span className="text-2xl tracking-display text-iron lg:text-heading">/month</span>
-                </p>
-              </div>
-              <div className="flex flex-col gap-7.5 text-xl tracking-display lg:text-2xl">
-                <p className="font-semibold italic">Inclusions</p>
-                <ul className="grid gap-x-6 gap-y-6 sm:grid-cols-2">
-                  {monthlyInclusions.map((item) => (
-                    <li key={item} className="flex items-center gap-3">
-                      <Triangle className="size-3 shrink-0 text-brand" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <p className="text-xl font-bold tracking-display lg:text-2xl">₱2,000 Annual Membership Fee (paid once per year)</p>
-            </div>
-          </ChamferCard>
-
-          <div className="grid gap-8 sm:grid-cols-2">
-            {longerMemberships.map((m) => (
-              <ChamferCard key={m.title} size="sm">
-                <div className="flex h-full flex-col gap-7 px-6 py-8 sm:px-10.5">
-                  <h3 className="text-3xl font-bold tracking-display lg:text-heading">{m.title}</h3>
-                  <p className="text-5xl font-bold tracking-display text-brand lg:text-6xl">{m.price}</p>
-                  <p className="mt-auto text-2xl tracking-display">{m.savings}</p>
-                </div>
-              </ChamferCard>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-8 grid items-start gap-8 lg:grid-cols-2">
-          <p className="max-w-196 pt-2 text-lg tracking-display md:text-2xl lg:pt-8">
-            Not sure if Hustle and Muscle is right for you yet? We offer a day pass to test us out.
-          </p>
-          <div className="grid gap-8 sm:grid-cols-2">
-            {dayPasses.map((d) => (
-              <ChamferCard key={d.title} size="sm" glow={false}>
-                <div className="flex flex-col gap-4.5 px-6 py-8 sm:px-10.5">
-                  <p className="text-2xl tracking-display">Day Pass</p>
-                  <h3 className="text-3xl font-bold tracking-display lg:text-heading">{d.title}</h3>
-                  <p className="mt-3 text-5xl font-bold tracking-display text-neutral-400 lg:text-6xl">{d.price}</p>
-                </div>
-              </ChamferCard>
-            ))}
-          </div>
+        <div className="mt-16 lg:mt-20">
+          <MembershipPlans />
         </div>
       </Container>
     </section>

@@ -6,7 +6,8 @@ import { ChamferCard } from "@/components/chamfer-card";
 import { ArrowUpRight, Triangle } from "@/components/icons";
 import { Container, PageHero, SectionHeading } from "@/components/page-hero";
 import { CtaBand, SplitImage, StepList } from "@/components/sections";
-import { aboutStats, coaches, monthlyInclusions, values } from "@/lib/content";
+import { coaches } from "@/lib/coaches";
+import { aboutStats, monthlyInclusions, values } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -78,7 +79,7 @@ export default function AboutPage() {
                 </li>
               ))}
             </ul>
-            <ButtonLink href="/#membership">See Memberships</ButtonLink>
+            <ButtonLink href="/membership">See Memberships</ButtonLink>
           </SplitImage>
         </Container>
       </section>
@@ -95,7 +96,7 @@ export default function AboutPage() {
           <ul className="mt-14 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {coaches.slice(0, 3).map((coach) => (
               <li key={coach.name}>
-                <Link href="/coaches" className="group relative block aspect-portrait overflow-hidden bg-mist">
+                <Link href={`/coaches/${coach.slug}`} className="group relative block aspect-portrait overflow-hidden bg-mist">
                   <Image
                     src={coach.image}
                     alt={coach.name}

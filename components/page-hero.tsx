@@ -7,9 +7,11 @@ type PageHeroProps = {
   image: string;
   /** Where the photo should anchor when cropped on narrow screens. */
   imagePosition?: string;
+  /** Smaller title for long names (program and class pages). */
+  compact?: boolean;
 };
 
-export function PageHero({ title, description, image, imagePosition = "object-center" }: PageHeroProps) {
+export function PageHero({ title, description, image, imagePosition = "object-center", compact = false }: PageHeroProps) {
   return (
     <section className="relative flex min-h-160 items-end overflow-hidden bg-black pt-44 pb-20 lg:min-h-200 lg:items-center lg:pb-0">
       <Image src={image} alt="" fill priority sizes="100vw" className={`object-cover ${imagePosition}`} />
@@ -18,7 +20,7 @@ export function PageHero({ title, description, image, imagePosition = "object-ce
 
       <div className="relative mx-auto w-full max-w-site px-5 md:px-10">
         <div className="flex max-w-194.5 flex-col gap-8 lg:mt-30 lg:gap-12">
-          <h1 className="text-6xl font-medium tracking-display md:text-8xl lg:text-page">{title}</h1>
+          <h1 className={`font-medium tracking-display ${compact ? "text-5xl leading-tight md:text-7xl" : "text-6xl md:text-8xl lg:text-page"}`}>{title}</h1>
           <p className="text-xl tracking-display md:text-lede">{description}</p>
         </div>
       </div>
