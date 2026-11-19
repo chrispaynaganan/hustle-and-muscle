@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { mainNav, site } from "@/lib/site";
 import { CartButton } from "./cart/cart-ui";
+import { Magnetic } from "./motion/magnetic";
 import { ArrowRight, ChevronDown, Close, Mail, Menu, NavigationPointer, Phone } from "./icons";
 
 export function SiteHeader() {
@@ -121,13 +122,15 @@ export function SiteHeader() {
                 })}
               </ul>
               <CartButton className="-mx-4" />
-              <Link
-                href="/membership"
-                className="group/cta flex items-center gap-4 bg-white px-6 py-3 text-base font-medium text-brand transition-colors hover:bg-brand hover:text-white active:scale-95"
-              >
-                Become a Member
-                <ArrowRight className="size-5 transition-transform duration-300 group-hover/cta:translate-x-1" />
-              </Link>
+              <Magnetic strength={0.2}>
+                <Link
+                  href="/membership"
+                  className="glint group/cta flex items-center gap-4 bg-white px-6 py-3 text-base font-medium text-brand transition-colors hover:bg-brand hover:text-white active:scale-95"
+                >
+                  Become a Member
+                  <ArrowRight className="size-5 transition-transform duration-300 group-hover/cta:translate-x-1" />
+                </Link>
+              </Magnetic>
             </nav>
 
             <div className="flex items-center gap-1 lg:hidden">

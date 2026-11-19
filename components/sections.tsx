@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { ButtonLink } from "./button";
 import { ChevronDown, Triangle } from "./icons";
+import { Magnetic } from "./motion/magnetic";
 import { Container, SectionHeading } from "./page-hero";
 import { contactHref } from "@/lib/site";
 
@@ -48,9 +49,11 @@ export function CtaBand({ title, children, cta = "Book a Free Assessment", href 
       <Container className="relative flex flex-col items-start gap-12 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeading title={title}>{children}</SectionHeading>
         <div data-reveal className="shrink-0">
-          <ButtonLink href={href} className="text-lg">
-            {cta}
-          </ButtonLink>
+          <Magnetic>
+            <ButtonLink href={href} className="text-lg">
+              {cta}
+            </ButtonLink>
+          </Magnetic>
         </div>
       </Container>
     </section>

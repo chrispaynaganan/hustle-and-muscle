@@ -51,7 +51,7 @@
   --ease-snappy: cubic-bezier(0.2, 0.7, 0.2, 1);
   --drop-shadow-glow: 0 0 28px rgb(254 66 3 / 0.35);
 
-  --animate-word: word-in 0.9s var(--ease-snappy) both;
+  --animate-word: word-in 0.85s cubic-bezier(0.25, 1, 0.5, 1) both;
   --animate-fade-up: fade-up 0.9s var(--ease-snappy) both;
   --animate-hero-zoom: hero-zoom 2.6s var(--ease-snappy) both;
   --animate-page-in: page-in 0.6s var(--ease-snappy) both;
@@ -60,9 +60,19 @@
   --animate-bump: bump 0.45s var(--ease-snappy);
   --animate-grow-x: grow-x 0.9s var(--ease-snappy) both;
 
+  /* Words drop in, overshoot a touch and settle, like plates hitting the floor. */
   @keyframes word-in {
-    from {
-      transform: translateY(110%) rotate(3deg);
+    0% {
+      transform: translateY(115%) rotate(4deg);
+    }
+    62% {
+      transform: translateY(-7%) rotate(0deg);
+    }
+    80% {
+      transform: translateY(2.5%);
+    }
+    100% {
+      transform: none;
     }
   }
   @keyframes fade-up {
@@ -133,6 +143,36 @@
   }
 }
 
+/* A diagonal light sweep across primary buttons on hover. */
+@utility glint {
+  position: relative;
+  overflow: hidden;
+  /* overflow: hidden would otherwise let flex rows squash the button; keep its natural width. */
+  min-width: fit-content;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 -60%;
+    width: 40%;
+    background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.45), transparent);
+    transform: skewX(-20deg) translateX(-100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    &:hover::before {
+      animation: glint 0.9s var(--ease-snappy);
+    }
+  }
+}
+
+@keyframes glint {
+  to {
+    transform: skewX(-20deg) translateX(480%);
+  }
+}
+
 /* Thin orange bar that tracks page scroll (CSS scroll-driven animation). */
 @utility scroll-progress {
   transform-origin: left;
@@ -188,6 +228,17 @@
   .reveal-ready [data-reveal][data-shown] {
     opacity: 1;
     transform: none;
+  }
+  /* Photos wipe open from the left instead of fading. */
+  .reveal-ready [data-reveal="wipe"] {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.2s var(--ease-snappy);
+    transition-delay: calc(var(--reveal-i, 0) * 120ms);
+  }
+  .reveal-ready [data-reveal="wipe"][data-shown] {
+    clip-path: inset(0 0 0 0);
   }
 }
 

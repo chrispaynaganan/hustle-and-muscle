@@ -5,10 +5,10 @@ import { ArrowUpRight } from "./icons";
 type Variant = "solid" | "outline" | "ghost" | "brand";
 
 const variants: Record<Variant, string> = {
-  solid: "bg-white text-brand hover:bg-brand hover:text-white",
+  solid: "glint bg-white text-brand hover:bg-brand hover:text-white",
   outline: "border border-white text-white hover:bg-white hover:text-black",
   ghost: "text-white hover:text-brand",
-  brand: "bg-brand text-white hover:bg-brand-dark",
+  brand: "glint bg-brand text-white hover:bg-brand-dark",
 };
 
 export function buttonClasses(variant: Variant = "solid", extra = "") {

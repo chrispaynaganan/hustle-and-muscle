@@ -26,7 +26,7 @@ export default function ClassesPage() {
       <section className="bg-linear-to-b from-black to-surface py-20 lg:py-24">
         <Container>
           <SectionHeading title="Weekly Schedule">Buy a class pack, then show up at any of its scheduled times.</SectionHeading>
-          <div data-reveal-group className="mt-14 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-7">
+          <div data-reveal-group className="mt-14 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
             {days.map((day) => {
               const sessions = gxClasses.flatMap((c) => c.slots.filter((s) => s.day === day).map((s) => ({ ...s, c })));
               return (

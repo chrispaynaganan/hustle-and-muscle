@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ButtonLink } from "@/components/button";
 import { CountUp } from "@/components/motion/count-up";
 import { Marquee } from "@/components/motion/marquee";
+import { Magnetic } from "@/components/motion/magnetic";
+import { VelocityTicker } from "@/components/motion/velocity-ticker";
 import { SplitWords } from "@/components/motion/split-words";
 import { Star, Triangle } from "@/components/icons";
 import { Container, SectionHeading } from "@/components/page-hero";
@@ -17,6 +19,7 @@ export default function HomePage() {
       <Hero />
       <Partners />
       <Programs />
+      <VelocityTicker phrases={["Build Strength", "Train 24/7", "No Excuses", "Progress Over Perfection", "Hustle & Muscle"]} />
       <Consultation />
       <Membership />
       <Experiences />
@@ -53,7 +56,9 @@ function Hero() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-4 motion-safe:animate-fade-up sm:gap-8.5" style={{ animationDelay: "1000ms" }}>
-            <ButtonLink href="/membership">Become a Member</ButtonLink>
+            <Magnetic>
+              <ButtonLink href="/membership">Become a Member</ButtonLink>
+            </Magnetic>
             <ButtonLink href="/packages" variant="ghost">
               View Services
             </ButtonLink>
@@ -205,7 +210,7 @@ function Consultation() {
           </ButtonLink>
         </div>
 
-        <div data-reveal="scale" className="relative h-96 sm:h-120 lg:h-full">
+        <div data-reveal="wipe" className="relative h-96 sm:h-120 lg:h-full">
           <div aria-hidden className="absolute top-1/2 left-1/2 size-80 -translate-x-1/2 -translate-y-1/3 rounded-full bg-brand/50 blur-3xl motion-safe:animate-glow sm:size-120" />
           <Image
             src="/images/consult-coach.png"
@@ -250,7 +255,7 @@ function Experiences() {
         <div className="mt-12 grid items-center gap-12 lg:mt-20 lg:grid-cols-12 lg:gap-20">
           <Link
             href="/stories/alex"
-            data-reveal="scale"
+            data-reveal="wipe"
             className="group relative block aspect-video overflow-hidden lg:col-span-8 lg:aspect-auto lg:h-180"
             aria-label="View Alex's full interview"
           >

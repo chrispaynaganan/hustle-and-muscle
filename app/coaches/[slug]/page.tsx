@@ -149,7 +149,7 @@ export default async function CoachPage({ params }: Props) {
               All Coaches
             </ButtonLink>
           </div>
-          <ul data-reveal-group className="mt-12 grid gap-6 sm:grid-cols-3 lg:gap-8">
+          <ul data-reveal-group="wipe" className="mt-12 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {others.map((c) => (
               <li key={c.slug}>
                 <Link href={`/coaches/${c.slug}`} className="group relative block aspect-portrait overflow-hidden bg-mist">

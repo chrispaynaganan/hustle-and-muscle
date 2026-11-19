@@ -96,7 +96,7 @@ export default function AboutPage() {
               All Coaches
             </ButtonLink>
           </div>
-          <ul data-reveal-group className="mt-14 grid gap-6 sm:grid-cols-3 lg:gap-8">
+          <ul data-reveal-group="wipe" className="mt-14 grid gap-6 sm:grid-cols-3 lg:gap-8">
             {coaches.slice(0, 3).map((coach) => (
               <li key={coach.name}>
                 <Link href={`/coaches/${coach.slug}`} className="group relative block aspect-portrait overflow-hidden bg-mist">

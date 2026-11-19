@@ -94,9 +94,10 @@ All motion respects the visitor's "reduce motion" setting, which turns it off co
 | --- | --- | --- |
 | Hover and press | Buttons (arrow nudges, press shrink), nav underline, dropdowns, cards lift with an orange glow, product and coach photos zoom | Tailwind transitions |
 | Scroll reveal | Headings, cards and lists ease up as they enter the screen, with a stagger inside grids | Add `data-reveal` to an element, or `data-reveal-group` to a list to stagger its children (`components/motion/reveal-observer.tsx`) |
-| Page entrance | Hero headlines slide up word by word, the photo settles from a slow zoom, then the text and buttons fade in. Every page fades in on navigation | `SplitWords`, `animate-hero-zoom`, `app/template.tsx` |
+| Page entrance | Hero headlines drop in word by word with a slight bounce, the photo settles from a slow zoom, then the text and buttons fade in. Every page fades in on navigation | `SplitWords`, `animate-hero-zoom`, `app/template.tsx` |
 | Numbers | "500+ members", "10+ companies" and About stats count up | `CountUp` |
-| Signature motion | Partner logos scroll in an endless strip, orange glows breathe, the play button pulses, hero photos drift slower than the page, an orange progress bar tracks scrolling, the header shrinks and hides on scroll down then returns on scroll up, the cart badge pops when you add an item | `Marquee`, `animate-glow`, `parallax`, `scroll-progress`, `site-header.tsx` |
+| Kinetic details | Primary buttons get a light sweep on hover, cards slide an orange bar across the bottom, the main call-to-action buttons lean toward the mouse cursor (desktop only), coach and package photos wipe open from the left | `glint`, `ChamferCard`, `Magnetic`, `data-reveal="wipe"` |
+| Signature motion | A tilted orange slogan ticker on the homepage that speeds up with your scrolling and reverses when you scroll back up (`VelocityTicker`), partner logos scroll in an endless strip, orange glows breathe, the play button pulses, hero photos drift slower than the page, an orange progress bar tracks scrolling, the header shrinks and hides on scroll down then returns on scroll up, the cart badge pops when you add an item | `Marquee`, `animate-glow`, `parallax`, `scroll-progress`, `site-header.tsx` |
 
 Timings and keyframes live in `app/globals.css` under *Motion*.
 

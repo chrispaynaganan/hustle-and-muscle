@@ -15,16 +15,20 @@ export function RevealObserver() {
     if (!root.classList.contains("reveal-ready")) return;
     (window as unknown as { __hmReveal: boolean }).__hmReveal = true;
 
+    // Wipe targets are fully clipped while hidden, which the browser counts as "not visible",
+    // so we watch their parent instead and reveal them through this map.
+    const targets = new Map<Element, Element[]>();
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            entry.target.setAttribute("data-shown", "");
+            (targets.get(entry.target) ?? []).forEach((t) => t.setAttribute("data-shown", ""));
+            targets.delete(entry.target);
             io.unobserve(entry.target);
           }
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
     );
 
     const scan = () => {
@@ -35,7 +39,13 @@ export function RevealObserver() {
           el.style.setProperty("--reveal-i", String(Math.min(i, 8)));
         });
       });
-      document.querySelectorAll("[data-reveal]:not([data-shown])").forEach((el) => io.observe(el));
+      document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-shown])").forEach((el) => {
+        const watch = el.dataset.reveal === "wipe" && el.parentElement ? el.parentElement : el;
+        const list = targets.get(watch) ?? [];
+        if (!list.includes(el)) list.push(el);
+        targets.set(watch, list);
+        io.observe(watch);
+      });
     };
 
     scan();

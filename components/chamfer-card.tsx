@@ -26,7 +26,15 @@ export function ChamferCard({ children, className = "", innerClassName = "", siz
   return (
     <div className={`group/card ${lift} ${className}`}>
       <div className={`${shape} ${edge} h-full p-px transition-colors duration-500 ${hover ? "group-hover/card:from-brand group-hover/card:via-brand group-hover/card:to-brand" : ""}`}>
-        <div className={`${shape} relative h-full overflow-hidden bg-linear-to-br from-surface to-black ${innerClassName}`}>{children}</div>
+        <div className={`${shape} relative h-full overflow-hidden bg-linear-to-br from-surface to-black ${innerClassName}`}>
+          {children}
+          {hover && (
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-brand transition-transform duration-500 ease-snappy group-hover/card:scale-x-100"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

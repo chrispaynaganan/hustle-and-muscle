@@ -19,7 +19,7 @@ export default function CoachesPage() {
 
       <section className="bg-linear-to-b from-black to-surface pt-12 pb-24 lg:pt-22 lg:pb-30">
         <Container>
-          <ul data-reveal-group className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-reveal-group="wipe" className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {coaches.map((coach) => (
               <li key={coach.name} className="group relative aspect-portrait overflow-hidden bg-mist">
                 <Link href={`/coaches/${coach.slug}`} aria-label={`View ${coach.name}'s profile`} className="absolute inset-0">
@@ -31,6 +31,10 @@ export default function CoachesPage() {
                   className="object-cover transition duration-700 group-hover:scale-105"
                   />
                 </Link>
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1 origin-left scale-x-0 bg-brand transition-transform duration-500 ease-snappy group-hover:scale-x-100"
+                />
                 {/* Frosted panel */}
                 <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 bg-white/10 px-6 pt-10 pb-8 backdrop-blur-2xl sm:px-9">
                   <div className="flex flex-col gap-2">
@@ -42,17 +46,17 @@ export default function CoachesPage() {
                     <p className="text-base font-medium tracking-display">{coach.role}</p>
                   </div>
                   <p className="text-base font-light tracking-display italic">&ldquo;{coach.motto}&rdquo;</p>
-                  <div className="mt-2 grid grid-cols-2 gap-4 xl:gap-6">
+                  <div className="mt-2 flex flex-wrap gap-3">
                     {coach.facebook ? (
-                      <ButtonLink href={coach.facebook} target="_blank" rel="noreferrer" className="gap-2 px-3 text-sm xl:gap-4 xl:text-base">
+                      <ButtonLink href={coach.facebook} target="_blank" rel="noreferrer" icon={false} className="shrink-0 grow whitespace-nowrap">
                         View Facebook
                       </ButtonLink>
                     ) : (
-                      <ButtonLink href={contactHref("coaching", coach.name)} className="gap-2 px-3 text-sm xl:gap-4 xl:text-base">
+                      <ButtonLink href={contactHref("coaching", coach.name)} icon={false} className="shrink-0 grow whitespace-nowrap">
                         Book a Session
                       </ButtonLink>
                     )}
-                    <ButtonLink href={`/coaches/${coach.slug}`} variant="outline" className="gap-2 px-3 text-sm xl:gap-4 xl:text-base">
+                    <ButtonLink href={`/coaches/${coach.slug}`} variant="outline" icon={false} className="shrink-0 grow whitespace-nowrap">
                       View Profile
                     </ButtonLink>
                   </div>
