@@ -3,6 +3,7 @@ import { Container, PageHero, SectionHeading } from "@/components/page-hero";
 import { CtaBand, Faq } from "@/components/sections";
 import { MembershipPlans } from "@/components/training-cards";
 import { faqGroups } from "@/lib/faqs";
+import { contactHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Membership",
@@ -34,7 +35,7 @@ export default function MembershipPage() {
           </div>
         </Container>
       </section>
-      <CtaBand title="Want to see the gym first?" cta="Book a Tour" href="/contact">
+      <CtaBand title="Want to see the gym first?" cta="Book a Tour" href={contactHref("tour")}>
         Drop by for a free assessment and a walk-through of the facility before you join.
       </CtaBand>
     </>

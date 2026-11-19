@@ -4,6 +4,12 @@ import { footerNav, policyLinks, site } from "@/lib/site";
 import { Facebook, Instagram, TikTok } from "./icons";
 import { NewsletterForm } from "./newsletter-form";
 
+const socialLinks = [
+  { label: "Instagram", href: site.socials.instagram, Icon: Instagram },
+  { label: "Facebook", href: site.socials.facebook, Icon: Facebook },
+  { label: "TikTok", href: site.socials.tiktok, Icon: TikTok },
+].filter((s) => s.href);
+
 export function SiteFooter() {
   return (
     <footer className="bg-linear-to-t from-black to-surface-deep">
@@ -27,17 +33,15 @@ export function SiteFooter() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-6">
-            <a href={site.socials.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="transition-colors hover:text-brand">
-              <Instagram className="size-5" />
-            </a>
-            <a href={site.socials.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="transition-colors hover:text-brand">
-              <Facebook className="size-5" />
-            </a>
-            <a href={site.socials.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok" className="transition-colors hover:text-brand">
-              <TikTok className="size-5" />
-            </a>
-          </div>
+          {socialLinks.length > 0 && (
+            <div className="flex items-center gap-6">
+              {socialLinks.map(({ label, href, Icon }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="transition-colors hover:text-brand">
+                  <Icon className="size-5" />
+                </a>
+              ))}
+            </div>
+          )}
 
           <ul className="flex flex-wrap items-center gap-x-8 gap-y-3 text-base tracking-display">
             {policyLinks.map((link) => (

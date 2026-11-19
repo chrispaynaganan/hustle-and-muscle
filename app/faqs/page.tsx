@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container, PageHero } from "@/components/page-hero";
 import { CtaBand, Faq } from "@/components/sections";
 import { faqGroups } from "@/lib/faqs";
+import { contactHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "FAQs",
@@ -31,7 +32,7 @@ export default function FaqsPage() {
           </div>
         </Container>
       </section>
-      <CtaBand title="Didn't find your answer?" cta="Contact Us">Send us a message and our team will get back to you.</CtaBand>
+      <CtaBand title="Didn't find your answer?" cta="Contact Us" href={contactHref("other")}>Send us a message and our team will get back to you.</CtaBand>
     </>
   );
 }

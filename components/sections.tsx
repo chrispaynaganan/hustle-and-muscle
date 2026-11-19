@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { ButtonLink } from "./button";
 import { ChevronDown, Triangle } from "./icons";
 import { Container, SectionHeading } from "./page-hero";
+import { contactHref } from "@/lib/site";
 
 /** Orange-triangle step list, as in the Contact page's "How it Works". */
 export function StepList({ steps, columns = 4 }: { steps: { title: string; body: string }[]; columns?: 3 | 4 }) {
@@ -39,7 +40,7 @@ export function Faq({ items }: { items: { q: string; a: string }[] }) {
 }
 
 /** Closing call-to-action band with the orange glow used on the homepage. */
-export function CtaBand({ title, children, cta = "Book a Free Assessment", href = "/contact" }: { title: string; children: ReactNode; cta?: string; href?: string }) {
+export function CtaBand({ title, children, cta = "Book a Free Assessment", href = contactHref("assessment") }: { title: string; children: ReactNode; cta?: string; href?: string }) {
   return (
     <section className="relative overflow-hidden bg-black py-24 lg:py-30">
       <div aria-hidden className="absolute -right-40 -bottom-60 size-140 rounded-full bg-brand/30 blur-3xl" />

@@ -1,16 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
+import { type ContactTopic, contactTopics } from "@/lib/site";
 import { Check, ChevronDown } from "@/components/icons";
 
 const fieldClasses =
   "w-full bg-field px-4 py-4.5 text-lg tracking-display text-white placeholder:text-smoke focus:outline-2 focus:outline-brand";
 
 const contactMethods = ["Call", "Text / SMS", "Email", "Facebook Messenger"];
-const helpTopics = ["Membership", "Personal training program", "Group classes", "Free assessment", "Something else"];
+const helpTopics: string[] = Object.values(contactTopics);
 const bestTimes = ["Morning (6AM to 12PM)", "Afternoon (12PM to 6PM)", "Evening (6PM to 10PM)"];
 
-export function ContactForm() {
+/** Reads ?topic= and ?about= so buttons around the site can pre-fill the form. */
+export function ContactFormWithParams() {
+  return (
+    <Suspense fallback={<ContactForm />}>
+      <PrefilledContactForm />
+    </Suspense>
+  );
+}
+
+function PrefilledContactForm() {
+  const params = useSearchParams();
+  const topicKey = params.get("topic") as ContactTopic | null;
+  const topic = topicKey && topicKey in contactTopics ? contactTopics[topicKey] : undefined;
+  const about = params.get("about") ?? undefined;
+  return <ContactForm key={`${topic}-${about}`} topic={topic} about={about} />;
+}
+
+export function ContactForm({ topic, about }: { topic?: string; about?: string }) {
   const [submitted, setSubmitted] = useState<string | null>(null);
 
   // Frontend-only: there's no backend yet, so the form confirms locally.
@@ -58,7 +77,7 @@ export function ContactForm() {
       </Field>
 
       <Field label="What can we help you with?" id="topic">
-        <Select id="topic" name="topic" placeholder="What can we help you with?" options={helpTopics} />
+        <Select id="topic" name="topic" placeholder="What can we help you with?" options={helpTopics} initial={topic} />
       </Field>
 
       <Field label="Best time to contact you" id="time">
@@ -70,6 +89,7 @@ export function ContactForm() {
           id="message"
           name="message"
           rows={3}
+          defaultValue={about ? `I'm interested in: ${about}. ` : undefined}
           placeholder="Tell us your goal, experience level, and when you want to start."
           className={`${fieldClasses} resize-y`}
         />
@@ -106,14 +126,14 @@ function Field({ label, id, children }: { label: string; id: string; children: R
   );
 }
 
-function Select({ id, name, options, placeholder }: { id: string; name: string; options: string[]; placeholder?: string }) {
+function Select({ id, name, options, placeholder, initial }: { id: string; name: string; options: string[]; placeholder?: string; initial?: string }) {
   return (
     <div className="relative">
       <select
         id={id}
         name={name}
         required
-        defaultValue={placeholder ? "" : options[0]}
+        defaultValue={initial ?? (placeholder ? "" : options[0])}
         className={`${fieldClasses} cursor-pointer appearance-none pr-12 invalid:text-smoke`}
       >
         {placeholder && (

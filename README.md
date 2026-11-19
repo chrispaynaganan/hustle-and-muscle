@@ -12,10 +12,10 @@ Built with **Next.js (App Router)**, **React**, **TypeScript** and **Tailwind CS
 
 | Area | Routes |
 | --- | --- |
-| Packages | `/membership`, `/programs`, `/programs/[slug]`, `/classes` (weekly GX schedule), `/classes/[slug]` |
+| Packages | `/packages`, `/membership`, `/programs`, `/programs/[slug]`, `/classes` (weekly GX schedule), `/classes/[slug]` |
 | Coaches | `/coaches/[slug]` profile for each coach |
 | Shop | `/shop`, `/supplements`, `/merch`, `/shop/[slug]` product pages, `/cart`, `/checkout`, `/checkout/success` |
-| Info | `/about`, `/why-hustle-and-muscle`, `/meal-plans`, `/faqs`, `/refer-a-friend`, `/careers` |
+| Info | `/about`, `/why-hustle-and-muscle`, `/stories/alex`, `/meal-plans`, `/faqs`, `/refer-a-friend`, `/careers`, `/careers/[slug]` |
 | Policies | `/club-rules`, `/privacy-policy`, `/cookie-policy`, `/terms` |
 
 ### Cart and checkout
@@ -33,7 +33,17 @@ Everything outside the three Figma pages uses sample copy. Check it with the gym
 - `lib/training.ts`: the two extra programs, the two extra GX classes, class schedules and coach assignments
 - `lib/faqs.ts`: policies such as freezes, returns and delivery fees
 - `lib/legal.ts`: Club Rules, Privacy, Cookie and Terms text (a template, not legal advice)
-- `app/refer-a-friend` and `app/careers`: referral reward and job openings
+- `app/refer-a-friend` and `lib/careers.ts`: referral reward and job openings
+- `app/stories/alex/page.tsx`: Alex's written interview (set `videoUrl` there to embed a real video)
+
+### Links that appear once you add them
+
+- Footer social icons show only when you add URLs to `site.socials` in `lib/site.ts`.
+- A coach's "View Facebook" button shows only when their `facebook` field in `lib/coaches.ts` is filled in. Until then the button is "Book a Session".
+
+### Pre-filled contact form
+
+Buttons like *Book a Free Assessment* or *Book a Session* link to `/contact` with the topic and subject filled in, using `contactHref()` from `lib/site.ts`.
 
 ## Run it locally
 
@@ -84,5 +94,5 @@ All design values are named tokens in `app/globals.css` (`text-brand`, `text-sec
 
 - Connect checkout to real payments (see *Cart and checkout*).
 - Wire the contact, newsletter, referral and careers forms to something real (a Next.js Server Action + Resend, Formspree, or a Google Sheet).
-- Replace the placeholder social links in `lib/site.ts`.
+- Add the gym's social links in `lib/site.ts` and coach Facebook links in `lib/coaches.ts`.
 - Swap the stock coach photos for real ones in `public/images/coach-*.jpg`.

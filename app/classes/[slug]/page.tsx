@@ -11,6 +11,7 @@ import { CtaBand } from "@/components/sections";
 import { ClassCard } from "@/components/training-cards";
 import { getCoach } from "@/lib/coaches";
 import { peso } from "@/lib/format";
+import { contactHref } from "@/lib/site";
 import { getClass, gxClasses } from "@/lib/training";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -108,7 +109,7 @@ export default async function ClassPage({ params }: Props) {
                 label="Join the Class"
                 className="w-full text-lg"
               />
-              <ButtonLink href="/membership" variant="outline" icon={false} className="w-full">
+              <ButtonLink href="/membership#day-pass" variant="outline" icon={false} className="w-full">
                 Try It With a Day Pass
               </ButtonLink>
             </div>
@@ -127,7 +128,7 @@ export default async function ClassPage({ params }: Props) {
         </Container>
       </section>
 
-      <CtaBand title="Questions about this class?" cta="Ask Us">Message us and we&apos;ll help you pick the right class for your level.</CtaBand>
+      <CtaBand title="Questions about this class?" cta="Ask Us" href={contactHref("classes", gx.title)}>Message us and we&apos;ll help you pick the right class for your level.</CtaBand>
     </>
   );
 }

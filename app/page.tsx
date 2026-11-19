@@ -6,6 +6,7 @@ import { Container, SectionHeading } from "@/components/page-hero";
 import { ClassCard, MembershipPlans, ProgramCard } from "@/components/training-cards";
 import { heroQuotes, partners, testimonials } from "@/lib/content";
 import { gxClasses, programs } from "@/lib/training";
+import { contactHref } from "@/lib/site";
 
 export default function HomePage() {
   return (
@@ -41,7 +42,7 @@ function Hero() {
           </div>
           <div className="flex flex-wrap items-center gap-4 sm:gap-8.5">
             <ButtonLink href="/membership">Become a Member</ButtonLink>
-            <ButtonLink href="/programs" variant="ghost">
+            <ButtonLink href="/packages" variant="ghost">
               View Services
             </ButtonLink>
           </div>
@@ -180,7 +181,7 @@ function Consultation() {
             We provide a complimentary consultation to assess your body composition, dietary restrictions, and other factors. This allows us
             to tailor a program specifically designed to meet your unique needs.
           </SectionHeading>
-          <ButtonLink href="/contact" className="text-lg">
+          <ButtonLink href={contactHref("assessment")} className="text-lg">
             Book a Free Consultation
           </ButtonLink>
         </div>
@@ -229,9 +230,9 @@ function Experiences() {
 
         <div className="mt-12 grid items-center gap-12 lg:mt-20 lg:grid-cols-12 lg:gap-20">
           <Link
-            href="/contact"
+            href="/stories/alex"
             className="group relative block aspect-video overflow-hidden lg:col-span-8 lg:aspect-auto lg:h-180"
-            aria-label="Watch Alex's member story"
+            aria-label="View Alex's full interview"
           >
             <Image src="/images/interview.jpg" alt="" fill sizes="(min-width: 1024px) 66vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
             <span aria-hidden className="absolute inset-0 bg-black/50 transition-colors group-hover:bg-black/40" />
@@ -248,7 +249,7 @@ function Experiences() {
                 Alex, a member for 3 years, as she shares her experience in Hustle &amp; Muscle Fitness Gym
               </footer>
             </blockquote>
-            <ButtonLink href="/contact" variant="outline">
+            <ButtonLink href="/stories/alex" variant="outline">
               View Full Interview
             </ButtonLink>
           </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCoach } from "@/lib/coaches";
 import { monthlyInclusions } from "@/lib/content";
 import { peso } from "@/lib/format";
+import { contactHref } from "@/lib/site";
 import { type GxClass, type Program, membershipFee, memberships } from "@/lib/training";
 import { ButtonLink } from "./button";
 import { AddToCartButton } from "./cart/cart-ui";
@@ -45,7 +46,7 @@ export function ProgramCard({ program }: { program: Program }) {
           <ButtonLink href={`/programs/${program.slug}`} className="text-lg">
             {program.primaryCta}
           </ButtonLink>
-          <ButtonLink href="/contact" variant="outline" icon={false}>
+          <ButtonLink href={contactHref("assessment", program.title)} variant="outline" icon={false}>
             Book a Free Assessment
           </ButtonLink>
         </div>
@@ -82,7 +83,7 @@ export function ClassCard({ gx, wide = false }: { gx: GxClass; wide?: boolean })
             Join the Class{gx.slotsLeft ? ` (${gx.slotsLeft} slots left)` : ""}
           </ButtonLink>
           {wide && (
-            <ButtonLink href="/contact" variant="outline" icon={false}>
+            <ButtonLink href={contactHref("assessment", gx.title)} variant="outline" icon={false}>
               Book a Free Assessment
             </ButtonLink>
           )}
@@ -146,7 +147,7 @@ export function MembershipPlans() {
         </div>
       </div>
 
-      <div className="mt-8 grid items-start gap-8 lg:grid-cols-2">
+      <div id="day-pass" className="mt-8 grid scroll-mt-10 items-start gap-8 lg:grid-cols-2">
         <p className="max-w-196 pt-2 text-lg tracking-display md:text-2xl lg:pt-8">
           Not sure if Hustle and Muscle is right for you yet? We offer a day pass to test us out.
         </p>

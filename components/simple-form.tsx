@@ -11,6 +11,7 @@ export type FormField = {
   placeholder?: string;
   required?: boolean;
   half?: boolean;
+  defaultValue?: string;
 };
 
 const fieldClasses =
@@ -53,10 +54,10 @@ export function SimpleForm({ fields, submitLabel, successTitle, successBody }: {
             {f.required === false && <span className="text-graphite"> (optional)</span>}
           </label>
           {f.type === "textarea" ? (
-            <textarea id={f.name} name={f.name} rows={4} required={f.required !== false} placeholder={f.placeholder} className={`${fieldClasses} resize-y`} />
+            <textarea id={f.name} name={f.name} rows={4} defaultValue={f.defaultValue} required={f.required !== false} placeholder={f.placeholder} className={`${fieldClasses} resize-y`} />
           ) : f.type === "select" ? (
             <div className="relative">
-              <select id={f.name} name={f.name} required={f.required !== false} defaultValue="" className={`${fieldClasses} cursor-pointer appearance-none pr-12 invalid:text-smoke`}>
+              <select id={f.name} name={f.name} required={f.required !== false} defaultValue={f.defaultValue ?? ""} className={`${fieldClasses} cursor-pointer appearance-none pr-12 invalid:text-smoke`}>
                 <option value="" disabled>
                   {f.placeholder ?? "Select one"}
                 </option>
@@ -69,7 +70,7 @@ export function SimpleForm({ fields, submitLabel, successTitle, successBody }: {
               <ChevronDown className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2" />
             </div>
           ) : (
-            <input id={f.name} name={f.name} type={f.type ?? "text"} required={f.required !== false} placeholder={f.placeholder ?? f.label} className={fieldClasses} />
+            <input id={f.name} name={f.name} type={f.type ?? "text"} defaultValue={f.defaultValue} required={f.required !== false} placeholder={f.placeholder ?? f.label} className={fieldClasses} />
           )}
         </div>
       ))}

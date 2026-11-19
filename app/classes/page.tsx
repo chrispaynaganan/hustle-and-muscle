@@ -5,6 +5,7 @@ import { CtaBand } from "@/components/sections";
 import { ClassCard } from "@/components/training-cards";
 import { getCoach } from "@/lib/coaches";
 import { gxClasses } from "@/lib/training";
+import { contactHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "GX Classes",
@@ -60,7 +61,7 @@ export default function ClassesPage() {
         </Container>
       </section>
 
-      <CtaBand title="New to group classes?">Try one with a day pass first, or book a free assessment and we&apos;ll point you to the right class.</CtaBand>
+      <CtaBand title="New to group classes?" href={contactHref("assessment", "GX classes")}>Try one with a day pass first, or book a free assessment and we&apos;ll point you to the right class.</CtaBand>
     </>
   );
 }

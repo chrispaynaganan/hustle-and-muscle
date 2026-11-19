@@ -11,6 +11,7 @@ import { CtaBand, StepList } from "@/components/sections";
 import { getCoach } from "@/lib/coaches";
 import { contactSteps } from "@/lib/content";
 import { peso } from "@/lib/format";
+import { contactHref } from "@/lib/site";
 import { getProgram, programs } from "@/lib/training";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -69,7 +70,7 @@ export default async function ProgramPage({ params }: Props) {
                 label={program.primaryCta}
                 className="w-full text-lg"
               />
-              <ButtonLink href="/contact" variant="outline" icon={false} className="w-full">
+              <ButtonLink href={contactHref("assessment", program.title)} variant="outline" icon={false} className="w-full">
                 Book a Free Assessment
               </ButtonLink>
             </div>
@@ -107,7 +108,7 @@ export default async function ProgramPage({ params }: Props) {
         </Container>
       </section>
 
-      <CtaBand title="Still have questions?" cta="Ask Us" href="/contact">
+      <CtaBand title="Still have questions?" cta="Ask Us" href={contactHref("program", program.title)}>
         Message us and a coach will help you decide if this program is right for you.
       </CtaBand>
     </>

@@ -1,5 +1,6 @@
 import { ButtonLink } from "./button";
 import { Container } from "./page-hero";
+import { contactHref } from "@/lib/site";
 
 /** Placeholder for nav items that don't have a design yet. */
 export function ComingSoon({ title, blurb, badge = "Coming Soon" }: { title: string; blurb: string; badge?: string }) {
@@ -12,7 +13,7 @@ export function ComingSoon({ title, blurb, badge = "Coming Soon" }: { title: str
           <h1 className="text-6xl font-medium tracking-display md:text-8xl lg:text-page">{title}</h1>
           <p className="text-xl tracking-display text-mist md:text-lede">{blurb}</p>
           <div className="flex flex-wrap gap-4">
-            <ButtonLink href="/contact">Talk to Us</ButtonLink>
+            <ButtonLink href={contactHref("other")}>Talk to Us</ButtonLink>
             <ButtonLink href="/" variant="outline" icon={false}>
               Back to Home
             </ButtonLink>

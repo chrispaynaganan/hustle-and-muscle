@@ -5,6 +5,7 @@ import { Triangle } from "@/components/icons";
 import { Container, PageHero, SectionHeading } from "@/components/page-hero";
 import { CtaBand, Faq, SplitImage, StepList } from "@/components/sections";
 import { mealPlanFaqs, mealPlanSteps, mealPlans, sampleDay } from "@/lib/content";
+import { contactHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Meal Plans",
@@ -50,7 +51,7 @@ export default function MealPlansPage() {
                     </ul>
                   </div>
                   <div className="mt-auto pt-2">
-                    <ButtonLink href="/contact" variant={plan.badge ? "solid" : "outline"}>
+                    <ButtonLink href={contactHref("meal-plan", `${plan.title} meal plan`)} variant={plan.badge ? "solid" : "outline"}>
                       Ask About This Plan
                     </ButtonLink>
                   </div>

@@ -5,6 +5,7 @@ import { Star } from "@/components/icons";
 import { Container, PageHero, SectionHeading } from "@/components/page-hero";
 import { CtaBand, SplitImage } from "@/components/sections";
 import { testimonials } from "@/lib/content";
+import { contactHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Why Hustle & Muscle",
@@ -58,7 +59,7 @@ export default function WhyPage() {
               what you don&apos;t need.
             </SectionHeading>
             <div className="flex flex-wrap gap-4">
-              <ButtonLink href="/contact">Book a Free Assessment</ButtonLink>
+              <ButtonLink href={contactHref("assessment")}>Book a Free Assessment</ButtonLink>
               <ButtonLink href="/membership" variant="outline" icon={false}>
                 See Memberships
               </ButtonLink>

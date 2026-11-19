@@ -4,6 +4,7 @@ import { ButtonLink } from "@/components/button";
 import { Container, PageHero } from "@/components/page-hero";
 import Link from "next/link";
 import { coaches } from "@/lib/coaches";
+import { contactHref } from "@/lib/site";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -42,9 +43,15 @@ export default function CoachesPage() {
                   </div>
                   <p className="text-base font-light tracking-display italic">&ldquo;{coach.motto}&rdquo;</p>
                   <div className="mt-2 grid grid-cols-2 gap-4 xl:gap-6">
-                    <ButtonLink href={coach.facebook} target="_blank" rel="noreferrer" className="gap-2 px-3 text-sm xl:gap-4 xl:text-base">
-                      View Facebook
-                    </ButtonLink>
+                    {coach.facebook ? (
+                      <ButtonLink href={coach.facebook} target="_blank" rel="noreferrer" className="gap-2 px-3 text-sm xl:gap-4 xl:text-base">
+                        View Facebook
+                      </ButtonLink>
+                    ) : (
+                      <ButtonLink href={contactHref("coaching", coach.name)} className="gap-2 px-3 text-sm xl:gap-4 xl:text-base">
+                        Book a Session
+                      </ButtonLink>
+                    )}
                     <ButtonLink href={`/coaches/${coach.slug}`} variant="outline" className="gap-2 px-3 text-sm xl:gap-4 xl:text-base">
                       View Profile
                     </ButtonLink>

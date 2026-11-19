@@ -10,6 +10,7 @@ import { CtaBand } from "@/components/sections";
 import { ClassCard } from "@/components/training-cards";
 import { coaches, getCoach } from "@/lib/coaches";
 import { peso } from "@/lib/format";
+import { contactHref } from "@/lib/site";
 import { gxClasses, programs } from "@/lib/training";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -102,10 +103,12 @@ export default async function CoachPage({ params }: Props) {
               </div>
 
               <div className="flex flex-wrap gap-4">
-                <ButtonLink href="/contact">Book a Session</ButtonLink>
-                <ButtonLink href={coach.facebook} target="_blank" rel="noreferrer" variant="outline">
-                  View Facebook
-                </ButtonLink>
+                <ButtonLink href={contactHref("coaching", coach.name)}>Book a Session</ButtonLink>
+                {coach.facebook && (
+                  <ButtonLink href={coach.facebook} target="_blank" rel="noreferrer" variant="outline">
+                    View Facebook
+                  </ButtonLink>
+                )}
               </div>
             </div>
           </div>
@@ -162,7 +165,7 @@ export default async function CoachPage({ params }: Props) {
         </Container>
       </section>
 
-      <CtaBand title={`Book a session with ${coach.name.split(" ")[1]}`}>Start with a free assessment and we&apos;ll set you up with the right plan.</CtaBand>
+      <CtaBand title={`Book a session with ${coach.name.split(" ")[1]}`} cta="Book a Session" href={contactHref("coaching", coach.name)}>Start with a free assessment and we&apos;ll set you up with the right plan.</CtaBand>
     </>
   );
 }

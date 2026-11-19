@@ -11,6 +11,7 @@ export type Coach = {
   bio: string[];
   specialties: string[];
   bestFor: string[];
+  /** Leave empty until the coach has a page; the site then shows "Book a Session" instead. */
   facebook: string;
 };
 
@@ -28,7 +29,7 @@ export const coaches: Coach[] = [
     ],
     specialties: ["Barbell technique", "Progressive overload", "Athletic conditioning", "Beginner onboarding"],
     bestFor: ["First-time lifters", "Athletes in-season", "Anyone stuck on a plateau"],
-    facebook: "https://www.facebook.com/",
+    facebook: "",
   },
   {
     slug: "jay-mendoza",
@@ -43,7 +44,7 @@ export const coaches: Coach[] = [
     ],
     specialties: ["Boxing fundamentals", "Muay Thai clinch and kicks", "Padwork", "Fight conditioning"],
     bestFor: ["Stress relief through striking", "Amateur competitors", "Cardio lovers"],
-    facebook: "https://www.facebook.com/",
+    facebook: "",
   },
   {
     slug: "ana-reyes",
@@ -58,7 +59,7 @@ export const coaches: Coach[] = [
     ],
     specialties: ["Fat loss programming", "Women's strength training", "Habit coaching", "Meal plan check-ins"],
     bestFor: ["Weight loss goals", "Women new to lifting", "Postpartum return to training"],
-    facebook: "https://www.facebook.com/",
+    facebook: "",
   },
   {
     slug: "paolo-dizon",
@@ -73,7 +74,7 @@ export const coaches: Coach[] = [
     ],
     specialties: ["HIIT and circuits", "Endurance building", "Kettlebell training", "Group coaching"],
     bestFor: ["Fat burn and conditioning", "Members who get bored easily", "Race preparation"],
-    facebook: "https://www.facebook.com/",
+    facebook: "",
   },
   {
     slug: "rhea-cruz",
@@ -88,7 +89,7 @@ export const coaches: Coach[] = [
     ],
     specialties: ["Mobility and flexibility", "Core strength", "Return-to-training plans", "Breathing and recovery"],
     bestFor: ["Desk workers with tight hips and backs", "Older members", "Lifters who want to move better"],
-    facebook: "https://www.facebook.com/",
+    facebook: "",
   },
   {
     slug: "luis-navarro",
@@ -103,7 +104,7 @@ export const coaches: Coach[] = [
     ],
     specialties: ["Hypertrophy programming", "Physique preparation", "Bulking and cutting phases", "Lifting form"],
     bestFor: ["Muscle gain goals", "Physique competitors", "Experienced lifters"],
-    facebook: "https://www.facebook.com/",
+    facebook: "",
   },
 ];
 

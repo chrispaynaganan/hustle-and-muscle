@@ -9,10 +9,11 @@ export const site = {
   phone: "0995 122 3189",
   phoneHref: "tel:+639951223189",
   email: "hustleandmusclegym247@gmail.com",
+  // Add the gym's real profile URLs here. Empty ones are hidden in the footer.
   socials: {
-    instagram: "https://www.instagram.com/",
-    facebook: "https://www.facebook.com/",
-    tiktok: "https://www.tiktok.com/",
+    instagram: "",
+    facebook: "",
+    tiktok: "",
   },
 };
 
@@ -25,8 +26,9 @@ export type NavItem = {
 export const mainNav: NavItem[] = [
   {
     label: "Packages",
-    href: "/membership",
+    href: "/packages",
     children: [
+      { label: "All Packages", href: "/packages" },
       { label: "Memberships", href: "/membership" },
       { label: "General Programs", href: "/programs" },
       { label: "GX Classes", href: "/classes" },
@@ -90,3 +92,25 @@ export const policyLinks = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms and Conditions", href: "/terms" },
 ];
+
+/** Topics for the contact form's "What can we help you with?" dropdown. */
+export const contactTopics = {
+  assessment: "Free assessment",
+  membership: "Membership",
+  program: "Personal training program",
+  classes: "Group classes",
+  "meal-plan": "Meal plan",
+  coaching: "Session with a specific coach",
+  tour: "Gym tour",
+  shop: "Shop order",
+  other: "Something else",
+} as const;
+
+export type ContactTopic = keyof typeof contactTopics;
+
+/** Link to the contact form with the topic (and optional subject) pre-filled. */
+export function contactHref(topic: ContactTopic, about?: string) {
+  const q = new URLSearchParams({ topic });
+  if (about) q.set("about", about);
+  return `/contact?${q.toString()}#inquiry`;
+}

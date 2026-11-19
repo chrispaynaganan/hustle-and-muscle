@@ -5,7 +5,7 @@ import { Container, PageHero, SectionHeading } from "@/components/page-hero";
 import { StepList } from "@/components/sections";
 import { contactSteps } from "@/lib/content";
 import { site } from "@/lib/site";
-import { ContactForm } from "./contact-form";
+import { ContactFormWithParams } from "./contact-form";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -41,7 +41,7 @@ export default function ContactPage() {
           <div className="mt-14 grid items-start gap-8 lg:mt-20 lg:grid-cols-2">
             <ChamferCard>
               <div className="px-6 py-10 sm:px-10.5 lg:py-16">
-                <ContactForm />
+                <ContactFormWithParams />
               </div>
             </ChamferCard>
 

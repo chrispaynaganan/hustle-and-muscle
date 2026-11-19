@@ -6,6 +6,7 @@ import { CtaBand, StepList } from "@/components/sections";
 import { ProductGrid, ShopTabs } from "@/components/shop/product-grid";
 import { products } from "@/lib/products";
 import { partners, supplementCategories, supplementRules } from "@/lib/content";
+import { contactHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Supplements",
@@ -86,7 +87,7 @@ export default function SupplementsPage() {
         </Container>
       </section>
 
-      <CtaBand title="Not sure what to take?" cta="Ask a Coach">
+      <CtaBand title="Not sure what to take?" cta="Ask a Coach" href={contactHref("other", "Supplement advice")}>
         Book a free assessment and your coach will recommend what&apos;s worth it for your goal, and what you can skip.
       </CtaBand>
     </>
