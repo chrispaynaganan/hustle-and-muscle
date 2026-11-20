@@ -119,6 +119,108 @@
     }
   }
 
+  /* Chat widget (Coach J.R.) */
+  --animate-breathe: breathe 3.2s ease-in-out infinite;
+  --animate-ring: ring 3.2s ease-out infinite;
+  --animate-pop: pop 0.6s cubic-bezier(0.25, 1, 0.5, 1) both;
+  --animate-unfold: unfold 0.7s var(--ease-snappy) both;
+  --animate-fold: fold 0.45s cubic-bezier(0.6, 0, 0.8, 0.3) both;
+  --animate-drop-left: drop-left 0.55s cubic-bezier(0.25, 1, 0.5, 1) both;
+  --animate-drop-right: drop-right 0.45s cubic-bezier(0.25, 1, 0.5, 1) both;
+  --animate-chip-in: chip-in 0.45s cubic-bezier(0.25, 1, 0.5, 1) both;
+  --animate-card-wipe: card-wipe 0.9s var(--ease-snappy) both;
+  --animate-lift: lift 0.7s var(--ease-snappy) infinite alternate;
+
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.08);
+      opacity: 0.4;
+    }
+  }
+  @keyframes ring {
+    from {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    to {
+      transform: scale(1.7);
+      opacity: 0;
+    }
+  }
+  @keyframes pop {
+    0% {
+      transform: scale(0.4) translateY(10px);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+  }
+  @keyframes unfold {
+    from {
+      clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
+    }
+    to {
+      clip-path: polygon(0 0, calc(100% - 1.5rem) 0, 100% 1.5rem, 100% 100%, 1.5rem 100%, 0 calc(100% - 1.5rem));
+    }
+  }
+  @keyframes fold {
+    from {
+      clip-path: polygon(0 0, calc(100% - 1.5rem) 0, 100% 1.5rem, 100% 100%, 1.5rem 100%, 0 calc(100% - 1.5rem));
+    }
+    to {
+      clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
+    }
+  }
+  @keyframes drop-left {
+    0% {
+      transform: translate(-14px, 14px) rotate(-2deg);
+      opacity: 0;
+    }
+    62% {
+      transform: translate(0, -3px);
+      opacity: 1;
+    }
+  }
+  @keyframes drop-right {
+    0% {
+      transform: translate(14px, 14px) rotate(2deg);
+      opacity: 0;
+    }
+    62% {
+      transform: translate(0, -3px);
+      opacity: 1;
+    }
+  }
+  @keyframes chip-in {
+    from {
+      transform: translateY(10px) scale(0.9);
+      opacity: 0;
+    }
+  }
+  @keyframes card-wipe {
+    from {
+      clip-path: polygon(0 0, 0 0, 0 0, 0 100%, 0 100%, 0 100%);
+    }
+    to {
+      clip-path: polygon(0 0, calc(100% - 1.5rem) 0, 100% 1.5rem, 100% 100%, 1.5rem 100%, 0 calc(100% - 1.5rem));
+    }
+  }
+  @keyframes lift {
+    from {
+      transform: translateY(4px);
+    }
+    to {
+      transform: translateY(-4px);
+    }
+  }
+
   /* Layout */
   --container-site: 104.25rem; /* 1588px content + 40px gutters */
   --aspect-portrait: 506 / 731;

@@ -86,6 +86,19 @@ public/images/          Images exported from Figma
 
 All copy and prices live in `lib/`, so updating the site is usually a one-file edit.
 
+## Coach J.R. (chat widget)
+
+A guided chat assistant in the bottom-right corner of every page (`components/chat/`). It's button-first, works in English and Filipino, and needs no AI service or backend.
+
+- **Journeys**: plan finder, prices, first-timers, classes (including "what's on today"), coach match, free assessment booking, shop, orders, meal plans, membership help, hours and location, careers and referrals.
+- **Real data**: prices, classes, coaches and products come from `lib/`, and "Add to cart" uses the site's cart.
+- **Bookings and handoffs**: the details J.R. collects are passed to the contact form through `sessionStorage` (never the URL), and the visitor taps Send. When the form is sent, J.R. confirms in the chat.
+- **Typed messages**: matched by keywords in `lib/chat/intents.ts`. Safety topics (injury, emergency, complaints, under-18, card numbers) are checked first.
+- **Nothing is stored**: chats live only in the open tab.
+- **His lines**: all in `lib/chat/copy.ts`. Have a native Bisaya speaker review them before launch.
+
+The full journey design lives in the Chatbot Journey Map doc. To add AI later, send typed messages that don't match a keyword to an API route instead of the "I didn't quite get that" fallback in `components/chat/chat-widget.tsx`.
+
 ## Animation
 
 All motion respects the visitor's "reduce motion" setting, which turns it off completely.

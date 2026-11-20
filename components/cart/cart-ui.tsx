@@ -11,7 +11,7 @@ import { type CartItem, useCart } from "./cart-provider";
 export function CartButton({ className = "" }: { className?: string }) {
   const { count, ready } = useCart();
   return (
-    <Link href="/cart" aria-label={`Cart, ${count} item${count === 1 ? "" : "s"}`} className={`relative flex size-11 items-center justify-center transition-colors hover:text-brand ${className}`}>
+    <Link href="/cart" data-cart-target aria-label={`Cart, ${count} item${count === 1 ? "" : "s"}`} className={`relative flex size-11 items-center justify-center transition-colors hover:text-brand ${className}`}>
       <Bag className="size-6" />
       {ready && count > 0 && (
         <span key={count} className="absolute top-0.5 right-0 flex size-5 items-center justify-center rounded-full bg-brand text-xs font-medium text-white motion-safe:animate-bump">
@@ -117,7 +117,7 @@ export function CartToast() {
     <div
       role="status"
       aria-live="polite"
-      className={`fixed right-4 bottom-4 left-4 z-50 transition-all duration-300 sm:left-auto sm:w-96 ${lastAdded ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}
+      className={`fixed right-4 bottom-28 left-4 z-50 transition-all duration-300 sm:left-auto sm:w-96 ${lastAdded ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}
     >
       {lastAdded && (
         <div className="flex flex-col gap-4 border border-brand/60 bg-night p-5 shadow-2xl">

@@ -22,7 +22,7 @@ type CartContextValue = {
   subtotal: number;
   ready: boolean;
   lastAdded: CartItem | null;
-  add: (item: Omit<CartItem, "qty">, qty?: number) => void;
+  add: (item: Omit<CartItem, "qty">, qty?: number, opts?: { silent?: boolean }) => void;
   setQty: (id: string, qty: number) => void;
   remove: (id: string) => void;
   clear: () => void;
@@ -70,7 +70,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(t);
   }, [lastAdded]);
 
-  const add = useCallback<CartContextValue["add"]>((item, qty = 1) => {
+  const add = useCallback<CartContextValue["add"]>((item, qty = 1, opts) => {
     setItems((prev) => {
       const existing = prev.find((i) => i.id === item.id);
       // Memberships, programs and classes are one-per-order.
@@ -80,7 +80,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { ...item, qty: single ? 1 : qty }];
     });
-    setLastAdded({ ...item, qty });
+    if (!opts?.silent) setLastAdded({ ...item, qty });
   }, []);
 
   const setQty = useCallback((id: string, qty: number) => {

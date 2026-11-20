@@ -1,7 +1,8 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { CHAT_PREFILL_KEY, type ChatPrefill } from "@/lib/chat/prefill";
 import { type ContactTopic, contactTopics } from "@/lib/site";
 import { Check, ChevronDown } from "@/components/icons";
 
@@ -26,10 +27,37 @@ function PrefilledContactForm() {
   const topicKey = params.get("topic") as ContactTopic | null;
   const topic = topicKey && topicKey in contactTopics ? contactTopics[topicKey] : undefined;
   const about = params.get("about") ?? undefined;
-  return <ContactForm key={`${topic}-${about}`} topic={topic} about={about} />;
+  const [fromChat, setFromChat] = useState<ChatPrefill | null>(null);
+
+  // Details Coach J.R. collected in the chat are handed over once, then cleared.
+  useEffect(() => {
+    try {
+      const raw = window.sessionStorage.getItem(CHAT_PREFILL_KEY);
+      if (raw) {
+        setFromChat(JSON.parse(raw));
+        window.sessionStorage.removeItem(CHAT_PREFILL_KEY);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const p: ChatPrefill = fromChat ?? {};
+  return (
+    <ContactForm
+      key={`${topic}-${about}-${fromChat ? "chat" : ""}`}
+      topic={p.topic ?? topic}
+      about={p.about ?? about}
+      message={p.message}
+      name={p.name}
+      mobile={p.mobile}
+      method={p.method}
+      time={p.time}
+    />
+  );
 }
 
-export function ContactForm({ topic, about }: { topic?: string; about?: string }) {
+export function ContactForm({ topic, about, message, name, mobile, method, time }: ChatPrefill) {
   const [submitted, setSubmitted] = useState<string | null>(null);
 
   // Frontend-only: there's no backend yet, so the form confirms locally.
@@ -38,6 +66,7 @@ export function ContactForm({ topic, about }: { topic?: string; about?: string }
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     setSubmitted(String(data.get("name") || "").split(" ")[0] || "there");
+    window.dispatchEvent(new CustomEvent("hm:inquiry-sent", { detail: { topic: data.get("topic") } }));
   }
 
   if (submitted) {
@@ -60,12 +89,12 @@ export function ContactForm({ topic, about }: { topic?: string; about?: string }
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-8">
       <Field label="Full Name" id="name">
-        <input id="name" name="name" required autoComplete="name" placeholder="Full Name" className={fieldClasses} />
+        <input id="name" name="name" required autoComplete="name" placeholder="Full Name" defaultValue={name} className={fieldClasses} />
       </Field>
 
       <div className="grid gap-8 sm:grid-cols-2 sm:gap-6">
         <Field label="Mobile Number" id="mobile">
-          <input id="mobile" name="mobile" type="tel" required autoComplete="tel" placeholder="Mobile Number" className={fieldClasses} />
+          <input id="mobile" name="mobile" type="tel" required autoComplete="tel" placeholder="Mobile Number" defaultValue={mobile} className={fieldClasses} />
         </Field>
         <Field label="Email Address" id="email">
           <input id="email" name="email" type="email" required autoComplete="email" placeholder="Email Address" className={fieldClasses} />
@@ -73,7 +102,7 @@ export function ContactForm({ topic, about }: { topic?: string; about?: string }
       </div>
 
       <Field label="Preferred Contact Method" id="method">
-        <Select id="method" name="method" placeholder="Preferred Contact Method" options={contactMethods} />
+        <Select id="method" name="method" placeholder="Preferred Contact Method" options={contactMethods} initial={method} />
       </Field>
 
       <Field label="What can we help you with?" id="topic">
@@ -81,7 +110,7 @@ export function ContactForm({ topic, about }: { topic?: string; about?: string }
       </Field>
 
       <Field label="Best time to contact you" id="time">
-        <Select id="time" name="time" options={bestTimes} />
+        <Select id="time" name="time" options={bestTimes} initial={time} />
       </Field>
 
       <Field label="Message" id="message">
@@ -89,7 +118,7 @@ export function ContactForm({ topic, about }: { topic?: string; about?: string }
           id="message"
           name="message"
           rows={3}
-          defaultValue={about ? `I'm interested in: ${about}. ` : undefined}
+          defaultValue={message ?? (about ? `I'm interested in: ${about}. ` : undefined)}
           placeholder="Tell us your goal, experience level, and when you want to start."
           className={`${fieldClasses} resize-y`}
         />

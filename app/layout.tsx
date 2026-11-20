@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import { CartProvider } from "@/components/cart/cart-provider";
 import { CartToast } from "@/components/cart/cart-ui";
+import { ChatWidget } from "@/components/chat/chat-widget";
 import { RevealObserver, revealBootScript } from "@/components/motion/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <SiteFooter />
           <CartToast />
+          <ChatWidget />
           <RevealObserver />
         </CartProvider>
       </body>
