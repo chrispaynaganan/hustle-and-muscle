@@ -96,12 +96,13 @@ export function ChatWidget() {
   // Every set of buttons gets a way out, except mid-booking steps.
   const chips = (list: Chip[], exit = true) => {
     const c = tr();
-    const hasExit = list.some((x) => x.label === c.menu.something || x.label === c.startOver);
+    const hasExit = list.some((x) => [c.menu.something, c.startOver, c.askMore, c.endChat].includes(x.label));
     return push({ kind: "chips", chips: exit && !hasExit ? [...list, { label: c.menu.something, run: () => menu(true) }] : list });
   };
 
   function pick(itemId: number, chip: Chip) {
-    setItems((list) => list.map((i) => (i.id === itemId && i.kind === "chips" ? { ...i, used: true } : i)));
+    // A tapped answer retires every button row above it; a link only retires its own row.
+    setItems((list) => list.map((i) => (i.kind === "chips" && (i.id === itemId || !chip.href) ? { ...i, used: true } : i)));
     if (chip.href) {
       if (chip.external) return;
       router.push(chip.href);
@@ -196,11 +197,11 @@ export function ChatWidget() {
     const c = tr();
     if (product) {
       await say(c.productAdded(name), { think: 400 });
-      chips([{ label: c.goCheckout, primary: true, href: "/checkout" }, { label: c.keepGoing, run: () => shop() }, { label: c.menu.something, run: () => menu(true) }]);
+      conclude([{ label: c.goCheckout, primary: true, href: "/checkout" }, { label: c.keepGoing, run: () => shop() }]);
       return;
     }
     await say(c.added(name), { think: 500 });
-    chips([{ label: c.menu.book, primary: true, run: () => book("assessment") }, { label: c.goCheckout, href: "/checkout" }, { label: c.allDone, run: () => bye() }]);
+    conclude([{ label: c.menu.book, primary: true, run: () => book("assessment") }, { label: c.goCheckout, href: "/checkout" }]);
   }
 
   /* ---------- cards ---------- */
@@ -280,17 +281,37 @@ export function ChatWidget() {
     if (await say(all ? c.everything : c.more, { think: 450 })) chips(menuChips(keys, !all), !all);
   }
 
-  async function more() {
+  // Every finished answer ends here: optional next steps, then "ask more or end the chat?".
+  async function conclude(actions: Chip[] = [], opts: { calm?: boolean } = {}) {
+    if (actions.length) chips(actions, false);
+    await sleep(actions.length ? 700 : 400);
     const c = tr();
-    await sleep(400);
-    if (await say(c.more, { think: 500 })) chips([{ label: c.menu.something, run: () => menu(true) }, { label: c.startOver, run: () => start() }, { label: c.allDone, run: () => bye() }]);
+    if (!(await say(c.wrapUp, { think: 500, calm: opts.calm }))) return;
+    chips(
+      [
+        { label: c.askMore, run: () => { setStatus((s) => (s === "passing" ? "online" : s)); menu(true); } },
+        { label: c.endChat, run: () => endChat() },
+      ],
+      false,
+    );
   }
 
-  async function bye() {
-    if (await say(tr().bye, { think: 500 })) {
-      await sleep(1600);
-      close();
-    }
+  async function endChat() {
+    if (!(await say(tr().bye, { think: 500 }))) return;
+    const run = runRef.current;
+    await sleep(1600);
+    if (run !== runRef.current) return;
+    close();
+    // Start fresh next time the chat is opened.
+    setTimeout(() => {
+      if (run !== runRef.current) return;
+      runRef.current++;
+      expectRef.current = null;
+      waitingRef.current = null;
+      missesRef.current = 0;
+      setStatus("online");
+      setItems([]);
+    }, reduced() ? 0 : 500);
   }
 
   /* J1: goal discovery */
@@ -334,12 +355,12 @@ export function ChatWidget() {
     if (!(await say(c.alsoConsider, { think: 500 }))) return;
     show(extra);
     await sleep(500);
-    chips([{ label: c.menu.book, primary: true, run: () => book("assessment", goalLabel(goal)) }, { label: c.menu.something, run: () => menu(true) }]);
+    conclude([{ label: c.menu.book, primary: true, run: () => book("assessment", goalLabel(goal)) }]);
   }
   const goalLabel = (goal: Goal) => copy.en.goals[goal];
   async function unsure() {
     const c = tr();
-    if (await say(c.unsure)) chips([{ label: c.menu.book, primary: true, run: () => book("assessment") }, { label: c.tryDayPass, href: "/membership#day-pass" }, { label: c.menu.something, run: () => menu(true) }]);
+    if (await say(c.unsure)) conclude([{ label: c.menu.book, primary: true, run: () => book("assessment") }, { label: c.tryDayPass, href: "/membership#day-pass" }]);
   }
 
   /* J2: prices */
@@ -351,14 +372,20 @@ export function ChatWidget() {
     const non = memberships.find((m) => m.slug === "day-pass-non-member")!;
     await sleep(600);
     if (!(await say(`${c.saveMost} ${c.dayPassLine(peso(member.price), peso(non.price))}`))) return;
-    chips([{ label: c.tryDayPass, run: () => membershipCard("day-pass-non-member") }, { label: c.bookTour, run: () => book("tour") }, { label: c.menu.plan, run: () => plan() }]);
+    conclude([{ label: c.tryDayPass, run: () => dayPass() }, { label: c.bookTour, run: () => book("tour") }, { label: c.menu.plan, run: () => plan() }]);
+  }
+  async function dayPass() {
+    await sleep(300);
+    membershipCard("day-pass-non-member");
+    await sleep(600);
+    conclude();
   }
 
   /* J3: first-timer */
   async function firstTime() {
     const c = tr();
     if (await say(c.firstTimer, { think: 900 }))
-      chips([{ label: c.menu.book, primary: true, run: () => book("assessment", "First-timer") }, { label: c.tryDayPass, href: "/membership#day-pass" }, { label: c.alexStory, href: "/stories/alex" }]);
+      conclude([{ label: c.menu.book, primary: true, run: () => book("assessment", "First-timer") }, { label: c.tryDayPass, href: "/membership#day-pass" }, { label: c.alexStory, href: "/stories/alex" }]);
   }
 
   /* J4: classes */
@@ -375,14 +402,14 @@ export function ChatWidget() {
     await sleep(300);
     classCard(slug);
     await sleep(600);
-    more();
+    conclude();
   }
   async function today() {
     const c = tr();
     const day = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "Asia/Manila" }).format(new Date());
     const list = gxClasses.flatMap((g) => g.slots.filter((s) => s.day === day).map((s) => ({ g, s })));
     if (!list.length) {
-      if (await say(c.todayNone(day))) chips([{ label: c.fullSchedule, href: "/classes" }, { label: c.menu.something, run: () => menu(true) }]);
+      if (await say(c.todayNone(day))) conclude([{ label: c.fullSchedule, href: "/classes" }]);
       return;
     }
     if (!(await say(c.todayList(day, list.map(({ g, s }) => `${g.title}, ${s.time}`).join(" · "))))) return;
@@ -411,7 +438,7 @@ export function ChatWidget() {
             await sleep(350);
           }
           await sleep(400);
-          more();
+          conclude();
         },
       })),
     );
@@ -424,7 +451,7 @@ export function ChatWidget() {
     if (!(await say(c.consent))) return;
     chips([
       { label: c.consentYes, primary: true, run: async () => { if (await say(tr().askName, { think: 400 })) expectRef.current = "name"; inputRef.current?.focus(); } },
-      { label: c.consentNo, run: async () => { if (await say(tr().noWorries)) more(); } },
+      { label: c.consentNo, run: async () => { if (await say(tr().noWorries)) conclude(); } },
     ], false);
   }
   async function onName(text: string) {
@@ -491,7 +518,7 @@ export function ChatWidget() {
           }
           if (k !== "merch") note(tr().supplementSafety);
           await sleep(300);
-          chips([{ label: tr().goCheckout, href: "/checkout" }, { label: tr().keepGoing, run: () => shop() }]);
+          conclude([{ label: tr().goCheckout, href: "/checkout" }, { label: tr().keepGoing, run: () => shop() }]);
         },
       })),
     );
@@ -502,8 +529,8 @@ export function ChatWidget() {
     const c = tr();
     if (!(await say(c.ordersQ))) return;
     chips([
-      { label: c.orderOpts.delivery, run: async () => { if (await say(tr().delivery(peso(150)))) more(); } },
-      { label: c.orderOpts.returns, run: async () => { if (await say(tr().returns)) more(); } },
+      { label: c.orderOpts.delivery, run: async () => { if (await say(tr().delivery(peso(150)))) conclude(); } },
+      { label: c.orderOpts.returns, run: async () => { if (await say(tr().returns)) conclude(); } },
       { label: c.orderOpts.where, run: async () => { if (await say(tr().askOrder)) expectRef.current = "order"; } },
       { label: c.orderOpts.payment, run: async () => { if (await say(tr().paymentHandoff, { calm: true })) handoff("shop", "Payment problem with an online order", true); } },
     ]);
@@ -533,7 +560,7 @@ export function ChatWidget() {
         label: c.memberOpts[k],
         run: async () => {
           if (!(await say(tr().memberPolicy[k]))) return;
-          if (k === "renew") chips([{ label: tr().seeMemberships, href: "/membership" }, { label: tr().menu.something, run: () => menu(true) }]);
+          if (k === "renew") conclude([{ label: tr().seeMemberships, href: "/membership" }]);
           else handoff("membership", `Membership help: ${copy.en.memberOpts[k]}`, true);
         },
       })),
@@ -544,10 +571,9 @@ export function ChatWidget() {
   async function info() {
     const c = tr();
     if (!(await say(c.info(site.address, site.phone, site.email)))) return;
-    chips([
+    conclude([
       { label: c.openMaps, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Hustle and Muscle Fitness Gym ${site.address}`)}`, external: true },
       { label: c.bookTour, run: () => book("tour") },
-      { label: c.menu.something, run: () => menu(true) },
     ]);
   }
 
@@ -555,7 +581,7 @@ export function ChatWidget() {
   async function careersFlow() {
     const c = tr();
     if (!(await say(`${c.careersIntro} ${careers.map((r) => r.title).join(", ")}. ${c.referIntro}`, { think: 800 }))) return;
-    chips([{ label: c.viewRoles, href: "/careers" }, { label: c.referFriend, href: "/refer-a-friend" }, { label: c.menu.something, run: () => menu(true) }]);
+    conclude([{ label: c.viewRoles, href: "/careers" }, { label: c.referFriend, href: "/refer-a-friend" }]);
   }
 
   /* Handoff to staff (prefilled message form) */
@@ -567,7 +593,7 @@ export function ChatWidget() {
       await sleep(400);
       note(c.handoff);
     }
-    chips([
+    conclude([
       {
         label: c.openForm,
         primary: true,
@@ -578,7 +604,6 @@ export function ChatWidget() {
           if (window.matchMedia("(max-width: 639px)").matches) close();
         },
       },
-      { label: c.menu.something, run: () => { setStatus("online"); menu(true); } },
     ]);
   }
 
@@ -586,15 +611,15 @@ export function ChatWidget() {
   async function guard(intent: Intent) {
     const c = tr();
     if (intent === "emergency") {
-      if (await say(c.emergency, { calm: true, think: 300 })) chips([{ label: c.menu.person, run: () => handoff("other", "Urgent: someone may be hurt") }]);
+      if (await say(c.emergency, { calm: true, think: 300 })) conclude([{ label: c.menu.person, run: () => handoff("other", "Urgent: someone may be hurt") }], { calm: true });
       return true;
     }
     if (intent === "card") {
-      if (await say(c.cardWarning, { calm: true, think: 300 })) more();
+      if (await say(c.cardWarning, { calm: true, think: 300 })) conclude([], { calm: true });
       return true;
     }
     if (intent === "injury") {
-      if (await say(c.injury, { calm: true, think: 900 })) chips([{ label: c.menu.book, primary: true, run: () => book("assessment", "Training around an injury or condition") }, { label: c.menu.person, run: () => handoff("other", "Question about an injury or condition") }]);
+      if (await say(c.injury, { calm: true, think: 900 })) conclude([{ label: c.menu.book, primary: true, run: () => book("assessment", "Training around an injury or condition") }, { label: c.menu.person, run: () => handoff("other", "Question about an injury or condition") }], { calm: true });
       return true;
     }
     if (intent === "complaint") {
@@ -602,7 +627,7 @@ export function ChatWidget() {
       return true;
     }
     if (intent === "minor") {
-      if (await say(c.minor, { calm: true })) chips([{ label: c.menu.book, primary: true, run: () => book("assessment", "Member under 18, with parent") }, { label: c.menu.something, run: () => menu(true) }]);
+      if (await say(c.minor, { calm: true })) conclude([{ label: c.menu.book, primary: true, run: () => book("assessment", "Member under 18, with parent") }], { calm: true });
       return true;
     }
     return false;
@@ -615,6 +640,7 @@ export function ChatWidget() {
     const text = input.trim();
     if (!text) return;
     setInput("");
+    setItems((list) => list.map((i) => (i.kind === "chips" ? { ...i, used: true } : i)));
     user(text);
 
     // A card number is never handled as an answer, whatever we were waiting for.
@@ -642,7 +668,7 @@ export function ChatWidget() {
       member: member,
       info: info,
       careers: careersFlow,
-      thanks: () => bye(),
+      thanks: () => conclude(),
       greeting: () => menu(),
     };
     const go = intent ? routes[intent] : undefined;
@@ -707,7 +733,7 @@ export function ChatWidget() {
       await sleep(500);
       if (await say(waiting === "booking" ? tr().booked : tr().handedOff, { think: 500 })) {
         if (waiting === "booking") confetti();
-        more();
+        conclude();
       }
     };
     window.addEventListener("hm:inquiry-sent", onSent);
